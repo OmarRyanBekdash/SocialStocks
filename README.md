@@ -17,4 +17,4 @@ git branch -d <branch name> ::: delete the merged branch
 
 Social Stocks:
 This is a social network app for trading stocks.
-Created for the 2018 Cornell AppDev Hack Challenge by Omar Bekdash, Cindy Chen, Will Evans and Maxim Baduk.
+Created for the 2018 Cornell AppDev Hack Challenge by Omar Bekdash, Cindy Chen, William Evans and Maxim Baduk.
