@@ -2,7 +2,7 @@ import json
 from db import db, Users
 from flask import Flask, request
 
-db_filename = "todo2.db"
+db_filename = "SocialStocksDB"
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % db_filename
@@ -14,15 +14,14 @@ with app.app_context():
     db.create_all()
 
 @app.route('/api/investments/')
-def get_investments ():
+def get_investments():
     investments = Investments.query.all()
     res = {'success': True, 'data': [investment.serialize() for investment in investments]}
     return json.dumps(res)
 
 @app.route('/api/investments/', methods=['POST'])
-def post_investment ():
+def post_investment():
     body = json.loads(request.data)
-
     investment = Investments(
         company = body.get('company'),
         amount = body.get('amount'),

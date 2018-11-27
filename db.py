@@ -16,19 +16,36 @@ class Users(db.Model):
     email = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
+    profile_pic_url = db.Column(db.String, nullable=True)
+
+    followed = db.relationship(
+        'Users', secondary=friends,
+        primaryjoin=(friends.c.friender_id == id),
+        secondaryjoin=(friends.c.friended_id == id),
+        backref=db.backref('friends', lazy='dynamic'), lazy='dynamic')
+
 
     def __init__(self, **kwargs):
         self.email = kwargs.get('email', '')
         self.username = kwargs.get('username', '')
         self.password = kwargs.get('password', '')
+        self.profile_pic_url = kwargs.get('profile_pic_url', None)
 
     def serialize(self):
         return {
             'id': self.id,
             'email': self.email,
             'username': self.username,
-            'password': self.password
+            'password': self.password,
+            'profile_pic_url': self.profile_pic_url
         }
+
+# Association table, code from: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers
+friends = db.Table('friends',
+    db.Column('friender_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('friended_id', db.Integer, db.ForeignKey('users.id'))
+)
+
 
 class Investments(db.Model):
     __tablename__ = 'investments'
@@ -49,10 +66,10 @@ class Investments(db.Model):
 
     def serialize(self):
         return {
-            'id': self.id
-            'company': self.company
-            'amount': self.amount
-            'price': self.price
+            'id': self.id,
+            'company': self.company,
+            'amount': self.amount,
+            'price': self.price,
             'text': self.text
             #'method': self.method
         }
@@ -60,7 +77,7 @@ class Investments(db.Model):
 class Comments(db.Model):
     __tablename__= 'comments'
     id = db.Column(db.Integer, primary_key=True)
-    users_id = db.Column(db.String, ForeignKey('users.id'), nullable=False)
+    users_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
     text = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
 
@@ -74,8 +91,3 @@ class Comments(db.Model):
             'text': self.text,
             'username': self.username
         }
-
-
-#class Friends(db.Model):
-#    __tablename__= 'friends'
-#    self.
