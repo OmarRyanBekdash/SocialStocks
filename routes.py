@@ -32,6 +32,15 @@ def post_investment():
     db.session.commit()
     return json.dumps({'success': True, 'data': investment.serialize()}), 201
 
+@app.route('/api/investments/<int:user_id>/')
+def get_user_investments():
+    users_investment = Investments.query.filter_by(id=user.id).first()
+    if users_investment is not None:
+        return json.dumps({'success': True, 'data': users_investment.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
+
+
 
 if __name__ = '__main__'
     app.run(host='0.0.0.0', port=6000, debug=True)
