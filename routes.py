@@ -1,5 +1,5 @@
 import json
-from db import db, Users
+from db import db, Users, friends, Investments, Comments
 from flask import Flask, request
 
 db_filename = "SocialStocksDB"
