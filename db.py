@@ -31,6 +31,19 @@ class Users(db.Model):
         secondaryjoin=(friends.c.friended_id == id),
         backref=db.backref('friends', lazy='dynamic'), lazy='dynamic')
 
+    
+    def friend(self, user):
+        if not self.is_friend(user):
+            self.friended.append(user)
+
+    def unfriend(self, user):
+        if self.is_friend(user):
+            self.friended.remove(user)
+
+    def is_friend(self, user):
+        return self.friended.filter(
+            friends.c.friended_id == user.id).count() > 0
+
 
     def __init__(self, **kwargs):
         self.email = kwargs.get('email', '')
