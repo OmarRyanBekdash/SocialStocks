@@ -50,7 +50,7 @@ class Users(db.Model):
 class Investments(db.Model):
     __tablename__ = 'investments'
     id = db.Column(db.Integer, primary_key=True)
-    users_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False) #how do I make author the reference to users(id)
+    users_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
     company = db.Column(db.String, nullable=False)
     amount = db.Column(db.Float, nullable=False)
     price = db.Column(db.Float, nullable=False)
