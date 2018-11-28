@@ -10,6 +10,12 @@ def singleton(cls):
         return instances[cls]
     return get_instances
 
+# Association table, code from: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers
+friends = db.Table('friends',
+    db.Column('friender_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('friended_id', db.Integer, db.ForeignKey('users.id'))
+)
+
 class Users(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -39,12 +45,6 @@ class Users(db.Model):
             'password': self.password,
             'profile_pic_url': self.profile_pic_url
         }
-
-# Association table, code from: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-viii-followers
-friends = db.Table('friends',
-    db.Column('friender_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('friended_id', db.Integer, db.ForeignKey('users.id'))
-)
 
 
 class Investments(db.Model):
