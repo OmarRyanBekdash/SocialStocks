@@ -23,6 +23,7 @@ class Users(db.Model):
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     profile_pic_url = db.Column(db.String, nullable=True)
+    investments = db.relationship('Investments', cascade='delete')
 
     followed = db.relationship(
         'Users', secondary=friends,
