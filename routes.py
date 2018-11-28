@@ -42,5 +42,5 @@ def get_user_investments(user_id):
 
 
 
-if __name__ == '__main__'
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=6000, debug=True)
