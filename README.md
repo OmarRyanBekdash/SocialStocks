@@ -1,3 +1,15 @@
+TODO:
+
+Frontend:
+
+
+Backend:
+  Fix add and view friends funcion
+  Add view friend activity function
+
+
+-------------------------------------------------------
+
 Git Help: https://github.com/quinnliu/gitCommands/blob/master/README.md
 
 Adding repository:
