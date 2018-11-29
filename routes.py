@@ -66,7 +66,23 @@ def get_user_investments(user_id):
     if user_investments is not None:
         return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
+  
+@app.route('/api/investment/<int:user_id>/<int:investment_id>/', methods=['DELETE'])
+def delete_user_investment(user_id, investment_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        investment = Investments.query.filter_by(id=investment_id).first()
+        if investment is not None:
+            db.session.delete(investment)
+            db.session.commit()
+            return json.dumps({'success': True, 'data': investment.serialize()}), 200
+        return json.dumps({'success': False, 'error': 'Investment post not found!'}), 404
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
+#make function to see investments with friend id
+#'/api/investments/<int:user_id>/<int:friend_id>/
+
+  
 # Makes a friend relationship: <user_id> --> <friend_id>
 @app.route('/api/friend/<int:user_id>/<int:friend_id>/', methods=['POST'])
 def make_friend(user_id, friend_id):
@@ -87,7 +103,6 @@ def get_friends(user_id):
         friends = user.friended.all()
         return json.dumps({'success': True, 'data': [friend.serialize() for friend in friends]}), 201
     return json.dumps({'success': False, 'error': 'User not found'}), 404
-
 
 
 if __name__ == '__main__':
