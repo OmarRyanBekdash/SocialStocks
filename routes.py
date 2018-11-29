@@ -22,7 +22,7 @@ def welcome_message():
 
 @app.route('/stock_demo/')
 def stock_demo():
-    return stockObj.demo()
+    return stockObj.get_current_price('MFST')
 
 @app.route('/api/user/', methods=['POST'])
 def create_user():
