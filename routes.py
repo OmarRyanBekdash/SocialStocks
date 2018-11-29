@@ -59,7 +59,20 @@ def get_user_investments(user_id):
         return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
+@app.route('/api/investment/<int:user_id>/<int:investment_id>/', methods=['DELETE'])
+def delete_user_investment(user_id, investment_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        investment = Investments.query.filter_by(id=investment_id).first()
+        if investment is not None:
+            db.session.delete(investment)
+            db.session.commit()
+            return json.dumps({'success': True, 'data': investment.serialize()}), 200
+        return json.dumps({'success': False, 'error': 'Investment post not found!'}), 404
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
+#make function to see investments with friend id
+#'/api/investments/<int:user_id>/<int:friend_id>/
 
 
 if __name__ == '__main__':
