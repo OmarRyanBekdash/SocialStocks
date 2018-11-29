@@ -71,11 +71,22 @@ def get_user_investments(user_id):
 @app.route('/api/friend/<int:user_id>/<int:friend_id>/', methods=['POST'])
 def make_friend(user_id, friend_id):
     user = Users.query.filter_by(id=user_id).first()
-    friend = Users.query.filter_by(id=friend_id).first()
-    if user is not None and friend is not None:
-        user.friend(friend)
+    f = Users.query.filter_by(id=friend_id).first()
+    if user is not None and f is not None:
+        user.friend(f)
+        db.session.add()
+        db.session.commit()
         return json.dumps({'success': True, 'data': 'friended!'}), 201
     return json.dumps({'success': False, 'error': 'User or friend not found!'}), 404
+
+# Return a list of a user's friends in json format
+@app.route('/api/<int:user_id>/friends/', methods=["GET"])
+def get_friends(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        friends = user.friended.all()
+        return json.dumps({'success': True, 'data': [friend.serialize() for friend in friends]}), 201
+    return json.dumps({'success': False, 'error': 'User not found'}), 404
 
 
 

@@ -25,7 +25,7 @@ class Users(db.Model):
     profile_pic_url = db.Column(db.String, nullable=True)
     investments = db.relationship('Investments', cascade='delete')
 
-    followed = db.relationship(
+    friended = db.relationship(
         'Users', secondary=friends,
         primaryjoin=(friends.c.friender_id == id),
         secondaryjoin=(friends.c.friended_id == id),
@@ -43,6 +43,9 @@ class Users(db.Model):
     def is_friend(self, user):
         return self.friended.filter(
             friends.c.friended_id == user.id).count() > 0
+
+    def get_friends(self):
+        return self.friended.all()
 
 
     def __init__(self, **kwargs):
