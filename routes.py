@@ -1,6 +1,7 @@
 import json
 from db import db, Users, friends, Investments, Comments
 from flask import Flask, request
+from stock_api import StockGetter
 
 db_filename = "SocialStocksDB"
 app = Flask(__name__)
@@ -13,9 +14,15 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+stockObj = StockGetter()
+
 @app.route('/welcome/')
 def welcome_message():
     return json.dumps({'success': True, 'data': 'Welcome!'}), 200
+
+@app.route('/stock_demo/')
+def stock_demo():
+    return stockObj.get_current_price('MFST')
 
 @app.route('/api/user/', methods=['POST'])
 def create_user():
