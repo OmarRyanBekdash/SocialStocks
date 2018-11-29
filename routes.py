@@ -97,7 +97,7 @@ def make_friend(user_id, friend_id):
     f = Users.query.filter_by(id=friend_id).first()
     if user is not None and f is not None:
         user.friend(f)
-        db.session.add()
+        db.session.add(user)
         db.session.commit()
         return json.dumps({'success': True, 'data': 'friended!'}), 201
     return json.dumps({'success': False, 'error': 'User or friend not found!'}), 404
