@@ -1,0 +1,6 @@
+framework module Pods_SocialStocks {
+  umbrella header "Pods-SocialStocks-umbrella.h"
+
+  export *
+  module * { export * }
+}
