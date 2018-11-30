@@ -86,8 +86,20 @@ def delete_user_investment(user_id, investment_id):
         return json.dumps({'success': False, 'error': 'Investment post not found!'}), 404
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
-#make function to see investments with friend id
-#'/api/investments/<int:user_id>/<int:friend_id>/
+# See investments of all of user's friends
+@app.route('/api/investments/<int:user_id>/')
+def get_friends_investments(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        compiled_inv = []
+        friends = user.friended.all()
+        for friend in friends:
+            friend_inv = Investments.query.filter_by(id=friend.id).all()
+            compiled_inv.append(friend_inv)
+        return json.dumps({"success": True, 'data': compiled_inv})
+    return json.dumps({"success": False, 'error': "User not found"})
+
+            
 
   
 # Makes a friend relationship: <user_id> --> <friend_id>
