@@ -43,9 +43,9 @@ class StockScreenViewController: UIViewController {
         priceLabel.textColor = .black
         view.addSubview(priceLabel)
         
-        let backButton = UIBarButtonItem()
-        backButton.title = "Back"
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+//        let back = UIBarButtonItem(title: "back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(backMethod))
+//        self.navigationItem.leftBarButtonItem = back
+        
         
         stockView = UIImageView()
         stockView.translatesAutoresizingMaskIntoConstraints = false
@@ -77,6 +77,12 @@ class StockScreenViewController: UIViewController {
             ])
         
     }
+//    
+//    @objc func backMethod() {
+//        // If let statements can also chain boolean checks after them, like a normal if statement.
+//        navigationController?.pushViewController(HomeViewController(), animated: true)
+//    }
+
     
     
 }

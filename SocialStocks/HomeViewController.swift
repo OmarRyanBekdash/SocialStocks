@@ -17,10 +17,12 @@ import Alamofire
 //    func encrypt(password: String)
 
 
+
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating  {
     
+    
     var stockView: UITableView!
-    var dataStocksStarter: [Stock]!
+    var dataStocksStarter: [Stock] = []
     //var notifications: UIButton!
     //var addFriend: UIButton!
     var filteredStocks = [Stock]()
@@ -29,19 +31,50 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cellHeight: CGFloat = 80
     
     var searchController: UISearchController!
+//    var searchBar: UISearchBar!
+//    maybe???
+    
     
     let searchBy: SearchType = .company //Change this to serach by company or different ways
     
+    var navigationBar: UINavigationBar!
+    
+    var header: UILabel!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColorFromHex(rgbValue: 0x829EA1,alpha: 1)
+        view.backgroundColor = UIColor.init(red: 47/255, green: 203/255, blue: 89/255, alpha: 1.0)
         
-        title = "Friend Posts"
+        //title = "Search"
         
-//        let s1 = Stocky(company: "Apple", price: "178.32", amount: "150")
-//        let s2 = Stocky(company: "Microsoft", price: "109.48", amount: "135")
+//       let s1 = Stock(company: "Apple", price: "178.32", amount: "150")
+//        let s2 = Stock(company: "Microsoft", price: "109.48", amount: "135")
 //
 //        dataStocksStarter = [s1, s2]
+        
+        
+        
+        
+        navigationBar = UINavigationBar()
+        let navigationItem = UINavigationItem(title: "Search")
+        navigationBar.setItems([navigationItem], animated: false)
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        navigationBar.isTranslucent = false
+        navigationBar.barStyle = .blackOpaque
+        navigationBar.tintColor = .gray
+        navigationBar.backIndicatorImage = UIImage(named: "BackButtonImage")
+        view.addSubview(navigationBar)
+        
+        header = UILabel()
+        header.text = "Investment Posts"
+        header.textColor = .black
+        header.textAlignment = .left
+        header.font = UIFont.boldSystemFont(ofSize: 30)
+        view.addSubview(header)
+        
+        
 
         stockView = UITableView()
         stockView = UITableView(frame: .zero)
@@ -54,6 +87,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false //lets try out true after debugging
+        
         if searchBy == .company {
             searchController.searchBar.placeholder = "Search by company"
         }
@@ -70,12 +104,14 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         definesPresentationContext = true
         
         
+        
+        
         let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
-        self.navigationItem.rightBarButtonItem = notifications
+        self.navigationItem.leftBarButtonItem = notifications
         
         
         let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
-        self.navigationItem.leftBarButtonItem = addFriend
+        self.navigationItem.rightBarButtonItem = addFriend
         
         /*
          notifications = UIButton()
@@ -93,6 +129,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
          //notifications.addTarget(self, action: #selector(pushNavViewController), for: .touchUpInside)
          view.addSubview(addFriend)*/
         
+//        let back = UIBarButtonItem()
+//        back.title = "Back"
+//        self.navigationController?.navigationBar.topItem?.backBarButtonItem = back
+//
+    
+
+        
         setupConstraints()
         
     }
@@ -102,8 +145,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         NSLayoutConstraint.activate([
             stockView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             stockView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stockView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            stockView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             stockView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            ])
+        
+//        NSLayoutConstraint.activate([
+//
+//            ])
+// for navigation bar?????
+        
+        NSLayoutConstraint.activate([
+            header.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 8),
+            header.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            header.heightAnchor.constraint(equalToConstant: 35)
             ])
     }
     
@@ -118,6 +172,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.configure(for: stock)
         cell.setNeedsUpdateConstraints()
         cell.selectionStyle = .none
+        cell.backgroundColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1.0)
+        cell.layer.cornerRadius = 8
         // look at different cell selection styles
         return cell
     }
@@ -127,7 +183,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return filteredStocks.count
         }
         
-        return dataStocksStarter.count
+        return dataStocksStarter?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -149,20 +205,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     @objc func addFriendButtonTapped() {
-        print("friends tapped")
+        let navViewController = QRCodeViewController()
+        navigationController?.pushViewController(navViewController, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
     func searchBarIsEmpty() -> Bool {
@@ -182,8 +231,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return searchController.isActive && !searchBarIsEmpty()
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
     
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
@@ -197,25 +244,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     DispatchQueue.main.async{
                         self.stockView.reloadData()
                     }
-                        print("Search by company")
+                    print("Search by company")
                 case .price:
-                NetworkManager.getInvestment(fromPrice: searchText) { (investmentsArray) in
-                    self.filteredStocks = investmentsArray
-                }
+                    NetworkManager.getInvestment(fromPrice: searchText) { (investmentsArray) in
+                        self.filteredStocks = investmentsArray
+                    }
                     
-                DispatchQueue.main.async {
-                    self.stockView.reloadData()
-                }
+                    DispatchQueue.main.async {
+                        self.stockView.reloadData()
+                    }
                     print("Search by price")
                     
                 case .amount:
-                NetworkManager.getInvestment(fromAmount: searchText) { (investmentsArray) in
-                    self.filteredStocks = investmentsArray
-                }
+                    NetworkManager.getInvestment(fromAmount: searchText) { (investmentsArray) in
+                        self.filteredStocks = investmentsArray
+                    }
                     
-                DispatchQueue.main.async {
-                    self.stockView.reloadData()
-                }
+                    DispatchQueue.main.async {
+                        self.stockView.reloadData()
+                    }
                     print("Search by amount")
                 }
                 
@@ -224,8 +271,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.filteredStocks = []
             }
         }
-    self.stockView.reloadData()
+        self.stockView.reloadData()
     }
+
 }
 
 
@@ -242,10 +290,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //        let key = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, variant: .sha256).calculate()
 //
 
-}
+//}
+
+
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
+
+//extension HomeViewController: UISearchResultsUpdating {
+//    func updateSearchResults(for searchController: UISearchController) {
+//        filterContentForSearchText(searchController.searchBar.text!)
+//    }
+//}

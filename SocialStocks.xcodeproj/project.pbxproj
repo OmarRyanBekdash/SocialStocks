@@ -20,6 +20,9 @@
 		448CB5D121AF93170051E59A /* StockScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448CB5D021AF93170051E59A /* StockScreenViewController.swift */; };
 		448CB5D321AF93350051E59A /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448CB5D221AF93350051E59A /* Stock.swift */; };
 		448CB5DF21AFCC5B0051E59A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448CB5DE21AFCC5B0051E59A /* NetworkManager.swift */; };
+		44E3885A21B3083F006162CB /* MakeAnAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E3885921B3083F006162CB /* MakeAnAccountViewController.swift */; };
+		44ECBEBC21B2401800E7D5B3 /* QRCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ECBEBB21B2401800E7D5B3 /* QRCodeViewController.swift */; };
+		44ECBEBE21B2424300E7D5B3 /* QRScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44ECBEBD21B2424300E7D5B3 /* QRScannerController.swift */; };
 		8798FF970BC817693148930E /* Pods_SocialStocks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D601B57558DC9224A607138 /* Pods_SocialStocks.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		448CB5D221AF93350051E59A /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		448CB5DA21AFB3660051E59A /* SocialStocks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SocialStocks-Bridging-Header.h"; path = "../../../.Trash/SocialStocks-Bridging-Header.h"; sourceTree = "<group>"; };
 		448CB5DE21AFCC5B0051E59A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		44E3885921B3083F006162CB /* MakeAnAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeAnAccountViewController.swift; sourceTree = "<group>"; };
+		44ECBEBB21B2401800E7D5B3 /* QRCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeViewController.swift; sourceTree = "<group>"; };
+		44ECBEBD21B2424300E7D5B3 /* QRScannerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScannerController.swift; sourceTree = "<group>"; };
 		7D601B57558DC9224A607138 /* Pods_SocialStocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialStocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A23EEF637F98EB30267E588B /* Pods-SocialStocks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialStocks.release.xcconfig"; path = "Pods/Target Support Files/Pods-SocialStocks/Pods-SocialStocks.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,13 +136,16 @@
 			isa = PBXGroup;
 			children = (
 				448CB59C21AF91C70051E59A /* AppDelegate.swift */,
+				448CB59E21AF91C70051E59A /* ViewController.swift */,
+				44E3885921B3083F006162CB /* MakeAnAccountViewController.swift */,
 				448CB5CA21AF92180051E59A /* HomeViewController.swift */,
-				448CB5CC21AF92470051E59A /* User.swift */,
+				44ECBEBB21B2401800E7D5B3 /* QRCodeViewController.swift */,
+				44ECBEBD21B2424300E7D5B3 /* QRScannerController.swift */,
 				448CB5CE21AF92BB0051E59A /* StockTableViewCell.swift */,
 				448CB5D021AF93170051E59A /* StockScreenViewController.swift */,
 				448CB5DE21AFCC5B0051E59A /* NetworkManager.swift */,
+				448CB5CC21AF92470051E59A /* User.swift */,
 				448CB5D221AF93350051E59A /* Stock.swift */,
-				448CB59E21AF91C70051E59A /* ViewController.swift */,
 				448CB5A021AF91C70051E59A /* Main.storyboard */,
 				448CB5A321AF91CA0051E59A /* Assets.xcassets */,
 				448CB5A521AF91CA0051E59A /* LaunchScreen.storyboard */,
@@ -366,7 +375,6 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SocialStocks/Pods-SocialStocks-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -377,7 +385,6 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -401,7 +408,10 @@
 				448CB5D321AF93350051E59A /* Stock.swift in Sources */,
 				448CB5DF21AFCC5B0051E59A /* NetworkManager.swift in Sources */,
 				448CB59F21AF91C70051E59A /* ViewController.swift in Sources */,
+				44ECBEBC21B2401800E7D5B3 /* QRCodeViewController.swift in Sources */,
+				44ECBEBE21B2424300E7D5B3 /* QRScannerController.swift in Sources */,
 				448CB59D21AF91C70051E59A /* AppDelegate.swift in Sources */,
+				44E3885A21B3083F006162CB /* MakeAnAccountViewController.swift in Sources */,
 				448CB5CB21AF92180051E59A /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

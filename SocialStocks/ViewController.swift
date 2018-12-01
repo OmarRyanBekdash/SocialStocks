@@ -17,13 +17,14 @@ class ViewController: UIViewController {
     var passwordLabel: UILabel!
     
     var signInButton: UIButton!
+    var signUpButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         title = "Sign In"
-        view.backgroundColor = UIColorFromHex(rgbValue: 0x829EA1,alpha: 1)
+        view.backgroundColor = UIColor.init(red: 47/255, green: 203/255, blue: 89/255, alpha: 1.0)
         
         usernameText = UITextField()
         usernameText.translatesAutoresizingMaskIntoConstraints = false
@@ -60,9 +61,18 @@ class ViewController: UIViewController {
         signInButton = UIButton()
         signInButton.translatesAutoresizingMaskIntoConstraints = false
         signInButton.setTitle("Sign In", for: .normal)
-        signInButton.setTitleColor(.blue, for: .normal)
+        signInButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+        signInButton.layer.cornerRadius = 8
         signInButton.addTarget(self, action: #selector(pushHomeViewController), for: .touchUpInside)
         view.addSubview(signInButton)
+        
+        signUpButton = UIButton()
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        signUpButton.setTitle("Sign Up", for: .normal)
+        signUpButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+        signUpButton.layer.cornerRadius = 8
+//        signUpButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        view.addSubview(signUpButton)
         
         /*let signIn = UIBarItem()
          signIn.title = "Sign In Page"
@@ -93,8 +103,17 @@ class ViewController: UIViewController {
             passwordText.leadingAnchor.constraint(equalTo: passwordLabel.trailingAnchor, constant: 10),
             passwordText.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
+        
         NSLayoutConstraint.activate([
-            signInButton.topAnchor.constraint(equalTo: passwordLabel.topAnchor, constant: 50),
+            signUpButton.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 300),
+            signUpButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            signUpButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            signUpButton.heightAnchor.constraint(equalToConstant: 30),
+            signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            ])
+        
+        NSLayoutConstraint.activate([
+            signInButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 50),
             signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             signInButton.heightAnchor.constraint(equalToConstant: 30)
@@ -103,20 +122,22 @@ class ViewController: UIViewController {
     }
     
     @objc func pushHomeViewController() {
+//        if usernameText.text == User.username and passwordText.text == User.password {
         let hViewController = HomeViewController()
         self.navigationController?.pushViewController(hViewController, animated: true)
 //        dismiss(animated: true, completion: nil)
-    }
-    
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
+//        } else {
         
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
+//        }
     }
     // very iffy about dismissing in this function when we already pushed a viewController
     
+    @objc func pushMakeAnAccountController() {
+        let mViewController = MakeAnAccountViewController()
+        self.navigationController?.pushViewController(mViewController, animated: true)
+    }
+
+
     
 }
 

@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        if (configureError != nil) {
 //            println("We have an error! \(configureError)")
 //        }
+        
         
         window = UIWindow(frame: UIScreen.main.bounds)
         

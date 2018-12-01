@@ -10,5 +10,7 @@ target 'SocialStocks' do
   pod 'SnapKit'
   pod 'Google/SignIn'
   pod 'SwiftyJSON'
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
 
 end

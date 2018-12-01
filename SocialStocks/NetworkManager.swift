@@ -21,7 +21,7 @@ enum SearchType {
 // all errors are associated with the lack of URL to query for the JSON
 class NetworkManager {
     
-    private static let friendsInvestmentURL = "http://localhost:6000/api/investments/"
+    private static let friendsInvestmentURL = "http://35.196.119.50/welcome/"
     
 //    private static let companyURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}"
     
