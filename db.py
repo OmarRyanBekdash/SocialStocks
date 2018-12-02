@@ -31,7 +31,9 @@ class Users(db.Model):
         secondaryjoin=(friends.c.friended_id == id),
         backref=db.backref('friends', lazy='dynamic'), lazy='dynamic')
 
-    
+    def getId(self):
+        return self.id
+        
     def friend(self, user):
         if not self.is_friend(user):
             self.friended.append(user)

@@ -69,9 +69,12 @@ def post_investment(user_id):
 
 @app.route('/api/investments/<int:user_id>/')
 def get_user_investments(user_id):
-    user_investments = Investments.query.filter_by(users_id=user_id).first()
-    if user_investments is not None:
-        return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
+    user = Users.query.filter_by(id=user_id)
+    if user is not None:
+        user_investments = Investments.query.filter_by(users_id=user_id).first()
+        if user_investments is not None:
+            return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
+        return json.dumps({'success': False, 'error': 'User has no investments!'})
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
   
 @app.route('/api/investment/<int:user_id>/<int:investment_id>/', methods=['DELETE'])
@@ -91,12 +94,13 @@ def delete_user_investment(user_id, investment_id):
 def get_friends_investments(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
-        compiled_inv = []
         friends = user.friended.all()
-        for friend in friends:
-            friend_inv = Investments.query.filter_by(id=friend.id).all()
-            compiled_inv.append(friend_inv.serialize())
-        return json.dumps({"success": True, 'data': compiled_inv})
+        investments = []
+        for friend in friends: 
+            invs = Investments.query.filter_by(users_id=friend.id).all()
+            for inv in invs:
+                investments.append(inv)
+        return json.dumps({'success': True, 'data': [inv.serialize() for inv in investments]}), 201
     return json.dumps({"success": False, 'error': "User not found"})
 
  
@@ -107,6 +111,8 @@ def make_friend(user_id, friend_id):
     f = Users.query.filter_by(id=friend_id).first()
     if user is not None and f is not None:
         user.friend(f)
+        f.friend(user)
+        db.session.add(user)
         db.session.add(user)
         db.session.commit()
         return json.dumps({'success': True, 'data': 'friended!'}), 201
