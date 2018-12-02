@@ -22,7 +22,7 @@ enum SearchType {
 class NetworkManager {
     
     private static let investmentURL = "http://35.196.240.185/api/investments/"
-    private static let userQueryURL = "http://35.196.240.185/api/user/"
+    private static let userQueryURL = "http://localhost:5000/api/user/"//"http://35.196.240.185/api/user/"
     
     
 //    private static let companyURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}"
