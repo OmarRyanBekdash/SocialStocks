@@ -95,7 +95,7 @@ def get_friends_investments(user_id):
         friends = user.friended.all()
         for friend in friends:
             friend_inv = Investments.query.filter_by(id=friend.id).all()
-            compiled_inv.append(friend_inv)
+            compiled_inv.append(friend_inv.serialize())
         return json.dumps({"success": True, 'data': compiled_inv})
     return json.dumps({"success": False, 'error': "User not found"})
 
