@@ -56,6 +56,13 @@ def update_user(user_id):
         return json.dumps({'success': True, 'data': user.serialize()})
     return json.dumps({'success': False, 'error': 'User does not exist.'})
 
+@app.route('/api/user/<int:user_id>/')
+def get_user(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        return json.dumps ({'success': True, 'data': user.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
 
 
 @app.route('/api/users/', methods=["GET"])
@@ -134,7 +141,7 @@ def make_friend(user_id, friend_id):
         user.friend(f)
         f.friend(user)
         db.session.add(user)
-        db.session.add(user)
+        db.session.add(f)
         db.session.commit()
         return json.dumps({'success': True, 'data': 'friended!'}), 201
     return json.dumps({'success': False, 'error': 'User or friend not found!'}), 404

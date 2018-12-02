@@ -184,15 +184,12 @@ class NetworkManager {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
-            
         }
     }
     
-    static func editUser(fromEmail email: String, fromUsername username: String, fromPassword password: String, fromUser user: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
+    static func editUser(fromUser user_id: Int, fromEmail email: String, fromUsername username: String, fromPassword password: String, fromConfirmPassword confirmPassword: String, _ didGetUser: @escaping (UserUpdateResponse) -> Void) {
         
-        let user_id = User.currentUser?.id
-        let editUserURL = "http://35.196.240.185/api/\(user_id)/"
+        let editUserURL = "http://35.196.240.185/api/user/\(user_id)/"
         
         let parameters :[String:Any] =
             [
@@ -200,7 +197,7 @@ class NetworkManager {
                 "username": username,
                 "password": password
             ]
-        Alamofire.request(editUserURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+        Alamofire.request(editUserURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -209,27 +206,24 @@ class NetworkManager {
                 
                 let jsonDecoder = JSONDecoder()
                 
-                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
-                    didGetUser(user)
+                if let updatedUser = try? jsonDecoder.decode(UserUpdateResponse.self, from: data) {
+                    didGetUser(updatedUser)
                 } else {
                     print("Invalid Data")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
-            
         }
-        
     }
     
     static func makeFriend(fromUser user_id: Int, fromFriend friend_id: Int, _ didGetUser: @escaping (MakeFriendResponse) -> Void) {
 
-        let editUserURL = "http://35.196.240.185/api/friend/\(user_id)/\(friend_id)/"
+        let makeFriendURL = "http://35.196.240.185/api/friend/\(user_id)/\(friend_id)/"
         // http://35.196.240.185/api/friend/3/4
         // http://35.196.240.185/api/friend/?user_id=3&friend_id=4
         
-        Alamofire.request(editUserURL, method: .post, parameters: nil, encoding: URLEncoding.default, headers: nil).validate().responseData { (response) in
+        Alamofire.request(makeFriendURL, method: .post, parameters: nil, encoding: URLEncoding.default, headers: nil).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -248,6 +242,30 @@ class NetworkManager {
             }
         }
 
+    }
+    
+    static func getUser(fromUser user_id: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
+        let getUserURL = "http://35.196.240.185/user/\(user_id)/"
+        
+        Alamofire.request(getUserURL, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).validate().responseData { (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                
+                let jsonDecoder = JSONDecoder()
+                
+                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
+                    didGetUser(user)
+                } else {
+                    print("Invalid Data")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
     }
     
 }

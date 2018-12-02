@@ -50,5 +50,12 @@ struct UserSignInResponse: Decodable {
 
 struct MakeFriendResponse: Codable {
     var success: Bool
-    var data: String
+    var data: String?
+    var error: String?
+}
+
+struct UserUpdateResponse: Codable {
+    var success: Bool
+    var data: User?
+    var error: String?
 }
