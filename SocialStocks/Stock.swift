@@ -12,7 +12,7 @@ import Foundation
 struct Stock: Decodable{
     let company: String
     let price: String
-    let amount: String!
+    let amount: String
     
     init(company: String, price: String, amount: String, image: UIImage!) {
         self.company = "Stock: " + company

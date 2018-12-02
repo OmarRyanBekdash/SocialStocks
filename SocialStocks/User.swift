@@ -9,15 +9,19 @@
 import UIKit
 import Foundation
 
-class User{
+struct User: Decodable{
     
-    var name: String
-    var username: String
-    var password: String
-    var stocks: [Stock]!
-    var friends: [User]!
+    static var currentUser: User?
     
-    init(name: String, username: String, password: String, stocks: [Stock], friends: [User]) {
+    let id: Int
+    let name: String
+    let username: String
+    let password: String
+    let stocks: [Stock]!
+    let friends: [User]!
+    
+    init(id: Int, name: String, username: String, password: String, stocks: [Stock], friends: [User]) {
+        self.id = id
         self.name = name
         self.username = username
         self.password = password
@@ -25,4 +29,14 @@ class User{
         self.friends = friends
     }
     
+}
+
+struct UserSearchResponse: Decodable {
+    var results: [User]
+}
+
+struct UserSignInResponse: Decodable {
+    var success: Bool
+    var data: User?
+    var error: String?
 }

@@ -22,10 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        if (configureError != nil) {
 //            println("We have an error! \(configureError)")
 //        }
-        
-        
-        window = UIWindow(frame: UIScreen.main.bounds)
-        
 
         let navigationController = UINavigationController(rootViewController: ViewController())
         window?.rootViewController = navigationController

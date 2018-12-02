@@ -22,7 +22,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     var stockView: UITableView!
-    var dataStocksStarter: [Stock] = []
+    var dataStocksStarter: [Stock]!
     //var notifications: UIButton!
     //var addFriend: UIButton!
     var filteredStocks = [Stock]()
@@ -45,7 +45,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.init(red: 47/255, green: 203/255, blue: 89/255, alpha: 1.0)
+        view.backgroundColor = UIColor.init(red: 0/255, green: 39/255, blue: 13/255, alpha: 1.0)
         
         //title = "Search"
         
@@ -63,8 +63,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         navigationBar.isTranslucent = false
         navigationBar.barStyle = .blackOpaque
+//        navigationBar.barTintColor =
+//        .barTintColor attribute??
         navigationBar.tintColor = .gray
-        navigationBar.backIndicatorImage = UIImage(named: "BackButtonImage")
+        navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "BackButtonImage")
         view.addSubview(navigationBar)
         
         header = UILabel()
@@ -87,7 +89,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false //lets try out true after debugging
-        
         if searchBy == .company {
             searchController.searchBar.placeholder = "Search by company"
         }
@@ -106,11 +107,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
-        let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
-        self.navigationItem.leftBarButtonItem = notifications
+//        let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
+//        self.navigationItem.leftBarButtonItem = notifications
+        
+        let settings = UIBarButtonItem(image: UIImage(named: "settingsGear"), style: UIBarButtonItem.Style.done, target: self, action: #selector(settingsButtonTapped))
+        self.navigationItem.leftBarButtonItem = settings
         
         
-        let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
+//        let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
+//        self.navigationItem.rightBarButtonItem = addFriend
+//
+        
+        let addFriend = UIBarButtonItem(image: UIImage(named: "add"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
+        addFriend.accessibilityFrame = CGRect(x: 0.0, y: 0.0, width: 10, height: 10)
         self.navigationItem.rightBarButtonItem = addFriend
         
         /*
@@ -173,7 +182,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.setNeedsUpdateConstraints()
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor.init(red: 255, green: 255, blue: 255, alpha: 1.0)
-        cell.layer.cornerRadius = 8
         // look at different cell selection styles
         return cell
     }
@@ -200,12 +208,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    @objc func notificationsButtonTapped() {
-        print("notifications tapped")
+    @objc func settingsButtonTapped() {
+        let navViewController = SettingsViewController()
+        navigationController?.pushViewController(navViewController, animated: true)
     }
     
     @objc func addFriendButtonTapped() {
-        let navViewController = QRCodeViewController()
+        let navViewController = AddFriendsViewController()
         navigationController?.pushViewController(navViewController, animated: true)
     }
     

@@ -29,14 +29,35 @@ def stock_demo():
 @app.route('/api/user/', methods=['POST'])
 def create_user():
     body = json.loads(request.data)
-    user = Users(
-        email=body.get('email'),
-        username=body.get('username'),
-        password=body.get('password')
-    )
-    db.session.add(user)
-    db.session.commit()
-    return json.dumps({'success': True, 'data': user.serialize()}), 201
+    correct_user = Users.query.filter_by(username=body.get('username')).first()
+    if correct_user == None: 
+        user = Users(
+            email=body.get('email'),
+            username=body.get('username'),
+            password=body.get('password')
+        )
+        db.session.add(user)
+        db.session.commit()
+        return json.dumps({'success': True, 'data': user.serialize()}), 201
+    else:
+        correct_user2 = Users.query.filter_by(password=body.get('password')).first()
+        if correct_user == corect_user2 and correct_user != None:
+            return json.dumps({'success': True, 'data': correct_user.serialize()})
+        return json.dumps({'success': False, 'error': 'Password is incorrect. Try again.'})
+    return json.dumps({'success': False, 'error': 'Username or Password is not correct. Try again.'})
+
+@app.route('/api/user/<int:user_id>/', methods=['POST'])
+def update_user(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        body = json.loads(request.data)
+        user.email = body.get('email', user.email)
+        user.username = body.get('username', user.username)
+        user.password = body.get('password', user.password)
+        db.session.commit()
+        return json.dumps({'success': True, 'data': user.serialize()})
+    return json.dumps({'success': False, 'error': 'User does not exist.'})
+
 
 
 @app.route('/api/users/', methods=["GET"])
@@ -50,6 +71,48 @@ def get_investments():
     investments = Investments.query.all()
     res = {'success': True, 'data': [investment.serialize() for investment in investments]}
     return json.dumps(res)
+
+def helper(user_id):
+    """
+    Returns an Python object containing all the investments of a user if the user has privacy
+    turned off.
+    """
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        if user.privacy == False:
+            investments = Investments.query.all(user_id=user_id)
+            return investments
+        if user.privacy == True:
+            return []
+
+@app.route('/api/investments/<int:user_id>/')
+def get_investments_by_user_privacy(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        if user.privacy == False:
+            investments = helper(user_id)
+            res = {'success': True, 'data': [investment.serialize() for investment in investments]}
+            return json.dumps(res)
+        if user.privacy == True:
+            res = {'success': True, 'data': []}
+            return json.dumps(res)
+    return json.dumps({'success': False, 'error': 'User does not exist.'})
+
+
+@app.route('/api/investments/<int:user_id>/final/')
+def get_friends_investments(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        friends = user.friended.all()
+        acc = []
+        for friend_id in friends:
+            friends_investments = helper(friend_id) # list of investments
+            for investment in friends_investments: # for each investment, append to accumulator
+                acc.append(investment)
+        res = {'success': True, 'data': acc}
+        return json.dumps(res)
+    return json.dumps({'success': False, 'error': 'User does not exist.'})
+
 
 @app.route('/api/investments/<int:user_id>/', methods=['POST'])
 def post_investment(user_id):
@@ -135,7 +198,7 @@ def get_friends(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
         friends = user.friended.all()
-        return json.dumps({'success': True, 'data': [friend.serialize() for friend in friends]}), 201
+        return json.dumps({'success': True, 'data': [friend.serialize() for friend in friends]}), 200
     return json.dumps({'success': False, 'error': 'User not found'}), 404
 
 
