@@ -59,3 +59,10 @@ class StockGetter():
         if data.get("Error Message") is None:
             return json.dumps({"success": True, "data": data["Global Quote"]})
         return json.dumps({"success": False, "error": data["Error Message"]})
+
+    def match_companies(self, search):
+        url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={}&apikey={}'.format(search, apikey)    
+        data = requests.get(url).json()
+        if data.get("Error Message") is None:
+            return json.dumps({"success": True, "data": data["bestMatches"]})
+        return json.dumps({"success": False, "error": data["Error Message"]})
