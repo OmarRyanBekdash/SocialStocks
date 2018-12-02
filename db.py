@@ -24,8 +24,6 @@ class Users(db.Model):
     password = db.Column(db.String, nullable=False)
     profile_pic_url = db.Column(db.String, nullable=True)
     investments = db.relationship('Investments', cascade='delete')
-    #comments = db.relationship('Comments', cascade='delete')
-    privacy = db.Column(db.Bool, nullable=False)
 
     friended = db.relationship(
         'Users', secondary=friends,
@@ -66,7 +64,6 @@ class Users(db.Model):
         }
 
 
-
 class Investments(db.Model):
     __tablename__ = 'investments'
     id = db.Column(db.Integer, primary_key=True)
@@ -75,15 +72,14 @@ class Investments(db.Model):
     amount = db.Column(db.Float, nullable=False)
     price = db.Column(db.Float, nullable=False)
     text = db.Column(db.String, nullable=True)
-    method = db.Column(db.String, nullable=True)
-    comments = db.relationship('Comments', cascade='delete')
+    #method = db.Column(db.String, nullable=True)
 
     def __init__(self, **kwargs):
         self.company = kwargs.get('company', '')
         self.amount = kwargs.get('amount', '')
         self.price = kwargs.get('price', '')
         self.text = kwargs.get('text', '')
-        self.method = kwargs.get('method', '')
+        #self.method = kwargs.get('method', '')
 
     def serialize(self):
         return {
@@ -91,15 +87,14 @@ class Investments(db.Model):
             'company': self.company,
             'amount': self.amount,
             'price': self.price,
-            'text': self.text,
-            'method': self.method
+            'text': self.text
+            #'method': self.method
         }
 
 class Comments(db.Model):
-    __tablename__ = 'comments'
+    __tablename__= 'comments'
     id = db.Column(db.Integer, primary_key=True)
     users_id = db.Column(db.String, db.ForeignKey('users.id'), nullable=False)
-    investments_id = db.Column(db.String, db.ForeignKey('investments.id'), nullable=False)
     text = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
 
