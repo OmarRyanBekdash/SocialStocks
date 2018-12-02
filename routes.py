@@ -51,9 +51,9 @@ def update_user(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
         body = json.loads(request.data)
-        user.email = body.get('email', user.email)
-        user.username = body.get('username', user.username)
-        user.password = body.get('password', user.password)
+        for key, value in body:
+            user.key = body.get(value, user.key)
+        db.session.add(user)
         db.session.commit()
         return json.dumps({'success': True, 'data': user.serialize()})
     return json.dumps({'success': False, 'error': 'User does not exist.'})
