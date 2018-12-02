@@ -119,7 +119,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //
         
         let addFriend = UIBarButtonItem(image: UIImage(named: "add"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
-        addFriend.accessibilityFrame = CGRect(x: 0.0, y: 0.0, width: 10, height: 10)
+        addFriend.accessibilityFrame = CGRect(x: 0.0, y: 0.0, width: 5, height: 5)
         self.navigationItem.rightBarButtonItem = addFriend
         
         /*

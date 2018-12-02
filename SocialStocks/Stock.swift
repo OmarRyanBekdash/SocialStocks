@@ -26,3 +26,8 @@ struct StockSearchResponse: Decodable {
     var results: [Stock]
 }
 
+struct PrivacyResponse: Decodable {
+    var success: Bool
+    var data: [Stock]?
+    var error: String?
+}

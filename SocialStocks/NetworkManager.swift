@@ -119,7 +119,7 @@ class NetworkManager {
             [
                 "username": username,
                 "password": password
-        ]
+            ]
         Alamofire.request(userQueryURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
@@ -129,8 +129,8 @@ class NetworkManager {
                 
                 let jsonDecoder = JSONDecoder()
                 
-                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
-                    didGetUser(user)
+                if let userSignIn = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
+                    didGetUser(userSignIn)
                 } else {
                     print("Invalid Data")
                 }
@@ -187,7 +187,7 @@ class NetworkManager {
         }
     }
     
-    static func editUser(fromUser user_id: Int, fromEmail email: String, fromUsername username: String, fromPassword password: String, fromConfirmPassword confirmPassword: String, _ didGetUser: @escaping (UserUpdateResponse) -> Void) {
+    static func editUser(fromUser user_id: Int, fromEmail email: String, fromUsername username: String, fromPassword password: String, fromConfirmPassword confirmPassword: String, fromProfilePicURL profile_pic_url: String, _ didGetUser: @escaping (UserUpdateResponse) -> Void) {
         
         let editUserURL = "http://35.196.240.185/api/user/\(user_id)/"
         
@@ -195,9 +195,10 @@ class NetworkManager {
             [
                 "email": email,
                 "username": username,
-                "password": password
+                "password": password,
+                "profile_pic_url": profile_pic_url
             ]
-        Alamofire.request(editUserURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
+        Alamofire.request(editUserURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).validate().responseData{ (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -245,7 +246,7 @@ class NetworkManager {
     }
     
     static func getUser(fromUser user_id: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
-        let getUserURL = "http://35.196.240.185/user/\(user_id)/"
+        let getUserURL = "http://35.196.240.185/api/user/\(user_id)/"
         
         Alamofire.request(getUserURL, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).validate().responseData { (response) in
             switch response.result {
@@ -268,4 +269,31 @@ class NetworkManager {
         
     }
     
+    static func turnPrivacy(fromUser user_id: Int, fromPrivacy privacy: Bool, fromFriend friend_id: Int, _ didGetUser: @escaping (PrivacyResponse) -> Void) {
+        
+        let privacyChangeOutputURL = "http://35.196.240.185/api/investments/a/\(user_id)/"
+        
+        let parameters :[String:Any] =
+            [
+                "privacy": privacy
+            ]
+        Alamofire.request(privacyChangeOutputURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+                
+                let jsonDecoder = JSONDecoder()
+                
+                if let updatedUser = try? jsonDecoder.decode(PrivacyResponse.self, from: data) {
+                    didGetUser(updatedUser)
+                } else {
+                    print("Invalid Data")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

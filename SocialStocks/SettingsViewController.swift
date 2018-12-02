@@ -61,7 +61,7 @@ class SettingsViewController: UIViewController {
         
         profilePicLink = UITextField()
         profilePicLink.translatesAutoresizingMaskIntoConstraints = false
-        profilePicLink.text = "Add Picture's URL"
+        profilePicLink.placeholder = "Add Picture's URL"
         profilePicLink.font = UIFont.systemFont(ofSize: 16, weight: .light)
         profilePicLink.textAlignment = .left
         profilePicLink.textColor = .gray
@@ -86,7 +86,7 @@ class SettingsViewController: UIViewController {
         
         updateName = UITextField()
         updateName.translatesAutoresizingMaskIntoConstraints = false
-        updateName.text = "Name"
+        updateName.placeholder = "Name"
         updateName.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateName.textAlignment = .left
         updateName.textColor = .gray
@@ -103,7 +103,7 @@ class SettingsViewController: UIViewController {
         
         updateUsername = UITextField()
         updateUsername.translatesAutoresizingMaskIntoConstraints = false
-        updateUsername.text = User.currentUser?.username
+        updateUsername.placeholder = User.currentUser?.username
         updateUsername.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateUsername.textAlignment = .left
         updateUsername.textColor = .gray
@@ -129,7 +129,7 @@ class SettingsViewController: UIViewController {
         
         confirmPassword = UITextField()
         confirmPassword.translatesAutoresizingMaskIntoConstraints = false
-        confirmPassword.text = "Confirm Password:"
+        confirmPassword.placeholder = User.currentUser?.password
         confirmPassword.font = UIFont.systemFont(ofSize: 16, weight: .light)
         confirmPassword.textAlignment = .left
         confirmPassword.textColor = .gray
@@ -146,7 +146,7 @@ class SettingsViewController: UIViewController {
         
         updateEmail = UITextField()
         updateEmail.translatesAutoresizingMaskIntoConstraints = false
-        updateEmail.text = User.currentUser?.email
+        updateEmail.placeholder = User.currentUser?.email
         updateEmail.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateEmail.textAlignment = .left
         updateEmail.textColor = .gray
@@ -299,8 +299,9 @@ class SettingsViewController: UIViewController {
                 guard let username = userSignInResponse.data?.username else { return }
                 guard let password = userSignInResponse.data?.password else { return }
                 guard let email = userSignInResponse.data?.email else { return }
+                guard let profilePicURL = userSignInResponse.data?.profile_pic_url else { return }
                 
-                NetworkManager.editUser(fromUser: userId, fromEmail: self.updateEmail?.text ?? email, fromUsername: self.updateUsername?.text ?? username, fromPassword: self.updatePassword?.text ?? password, fromConfirmPassword: self.confirmPassword.text!) { (userUpdateResponse) in
+                NetworkManager.editUser(fromUser: userId, fromEmail: self.updateEmail?.text ?? email, fromUsername: self.updatePassword?.text ?? username, fromPassword: self.updateUsername?.text ?? username, fromConfirmPassword: self.confirmPassword?.text ?? password, fromProfilePicURL: self.profilePicLink?.text ?? profilePicURL, { (userUpdateResponse) in
                     if self.updatePassword.text! == self.confirmPassword.text! {
                         User.currentUser = userUpdateResponse.data
                         if userUpdateResponse.success == true {
@@ -314,19 +315,18 @@ class SettingsViewController: UIViewController {
                         let alertController = UIAlertController(title: "Error", message: "\(userUpdateResponse.error!)", preferredStyle: .alert)
                         self.present(alertController, animated: true, completion: nil)
                     }
-                }
+                })
             } else {
                 let alertController = UIAlertController(title: "Error", message: "\(userSignInResponse.error!)", preferredStyle: .alert)
                 self.present(alertController, animated: true, completion: nil)
             }
         }
-        
-        //try to fix so that we have the user's username, password, and
-        
     }
     
+    //try to fix so that we have the user's username, password, and
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
+
+

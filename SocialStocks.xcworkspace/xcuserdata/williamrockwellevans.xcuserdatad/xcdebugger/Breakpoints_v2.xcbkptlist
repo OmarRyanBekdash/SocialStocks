@@ -2,4 +2,342 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/SettingsViewController.swift"
+            timestampString = "565464527.531342"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "updateButtonTapped()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocialStocks.SettingsViewController.updateButtonTapped() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/SettingsViewController.swift"
+                  timestampString = "565464527.587847"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "297"
+                  endingLineNumber = "297"
+                  offsetFromSymbolStart = "189">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SocialStocks.UserSignInResponse) -&gt; () in SocialStocks.SettingsViewController.updateButtonTapped() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/SettingsViewController.swift"
+                  timestampString = "565464527.609507"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "298"
+                  endingLineNumber = "298"
+                  offsetFromSymbolStart = "72">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/SettingsViewController.swift"
+            timestampString = "565464527.531455"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "295"
+            endingLineNumber = "295"
+            landmarkName = "updateButtonTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/SettingsViewController.swift"
+            timestampString = "565464527.531532"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "304"
+            endingLineNumber = "304"
+            landmarkName = "updateButtonTapped()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SocialStocks.UserSignInResponse) -&gt; () in SocialStocks.SettingsViewController.updateButtonTapped() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/SettingsViewController.swift"
+                  timestampString = "565464527.633532"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "304"
+                  endingLineNumber = "304"
+                  offsetFromSymbolStart = "1408">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SocialStocks.UserUpdateResponse) -&gt; () in closure #1 (SocialStocks.UserSignInResponse) -&gt; () in SocialStocks.SettingsViewController.updateButtonTapped() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/SettingsViewController.swift"
+                  timestampString = "565464527.6374381"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "305"
+                  endingLineNumber = "305"
+                  offsetFromSymbolStart = "63">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/SettingsViewController.swift"
+            timestampString = "565464527.531601"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
+            landmarkName = "updateButtonTapped()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/ViewController.swift"
+            timestampString = "565464527.5316761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "pushHomeViewController()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "SocialStocks.ViewController.pushHomeViewController() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/ViewController.swift"
+                  timestampString = "565464527.665154"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "138"
+                  endingLineNumber = "138"
+                  offsetFromSymbolStart = "29">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (SocialStocks.UserSignInResponse) -&gt; () in SocialStocks.ViewController.pushHomeViewController() -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/ViewController.swift"
+                  timestampString = "565464527.669261"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "139"
+                  endingLineNumber = "139"
+                  offsetFromSymbolStart = "56">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/ViewController.swift"
+            timestampString = "565464527.532207"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "pushHomeViewController()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/ViewController.swift"
+            timestampString = "565464527.532487"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "pushHomeViewController()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/ViewController.swift"
+            timestampString = "565464527.5327621"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "pushHomeViewController()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/NetworkManager.swift"
+            timestampString = "565464527.5330271"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "userSignUp(fromUsername:fromPassword:fromEmail:fromConfirmPassword:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/NetworkManager.swift"
+            timestampString = "565464527.533079"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "userSignUp(fromUsername:fromPassword:fromEmail:fromConfirmPassword:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/NetworkManager.swift"
+            timestampString = "565464527.533123"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "userSignUp(fromUsername:fromPassword:fromEmail:fromConfirmPassword:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/NetworkManager.swift"
+            timestampString = "565464527.5331661"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "userSignUp(fromUsername:fromPassword:fromEmail:fromConfirmPassword:_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static SocialStocks.NetworkManager.userSignUp(fromUsername: Swift.String, fromPassword: Swift.String, fromEmail: Swift.String, fromConfirmPassword: Swift.String, _: (SocialStocks.UserSignInResponse) -&gt; ()) -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/NetworkManager.swift"
+                  timestampString = "565464527.724414"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "170"
+                  endingLineNumber = "170"
+                  offsetFromSymbolStart = "620">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Foundation.Data&gt;) -&gt; () in static SocialStocks.NetworkManager.userSignUp(fromUsername: Swift.String, fromPassword: Swift.String, fromEmail: Swift.String, fromConfirmPassword: Swift.String, _: (SocialStocks.UserSignInResponse) -&gt; ()) -&gt; ()"
+                  moduleName = "SocialStocks"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/williamrockwellevans/Apps/SocialStocks/SocialStocks/NetworkManager.swift"
+                  timestampString = "565464527.727819"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "171"
+                  endingLineNumber = "171"
+                  offsetFromSymbolStart = "65">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SocialStocks/NetworkManager.swift"
+            timestampString = "565464572.7482899"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "userSignUp(fromUsername:fromPassword:fromEmail:fromConfirmPassword:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

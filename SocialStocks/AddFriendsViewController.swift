@@ -45,6 +45,8 @@ class AddFriendsViewController: UIViewController {
         view.addSubview(QRButton)
         
         
+        
+        
 
         // Do any additional setup after loading the view.
         setUpConstraints()
@@ -71,11 +73,17 @@ class AddFriendsViewController: UIViewController {
     
     @objc func QRCodeButtonPushed() {
         readerVC.delegate = self
+//        present(readerVC, animated: true, completion: nil)
         navigationController?.pushViewController(readerVC, animated: true)
+        //changed to modalViewController
+        //how to put back button that looks good on a ModalViewController
     }
     
     @objc func QRButtonPressed() {
+//        present(QRViewController(), animated: true, completion: nil)
         navigationController?.pushViewController(QRViewController(), animated: true)
+        //changed to modalViewController
+        //how to put back button that looks good on a ModalViewController
     }
     
     
