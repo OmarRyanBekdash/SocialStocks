@@ -129,7 +129,7 @@ class SettingsViewController: UIViewController {
         
         confirmPassword = UITextField()
         confirmPassword.translatesAutoresizingMaskIntoConstraints = false
-        confirmPassword.text = User.currentUser?.password
+        confirmPassword.text = "Confirm Password:"
         confirmPassword.font = UIFont.systemFont(ofSize: 16, weight: .light)
         confirmPassword.textAlignment = .left
         confirmPassword.textColor = .gray
@@ -289,7 +289,6 @@ class SettingsViewController: UIViewController {
         }
         else {
             privacyDescription.text = "Off: Everyone can see your current investment posts."
-            
         }
     }
     
