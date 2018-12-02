@@ -65,7 +65,8 @@ class Users(db.Model):
             'email': self.email,
             'username': self.username,
             'password': self.password,
-            'profile_pic_url': self.profile_pic_url
+            'profile_pic_url': self.profile_pic_url,
+            'privacy': self.privacy
         }
 
 
