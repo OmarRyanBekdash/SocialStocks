@@ -149,6 +149,10 @@ def get_friends(user_id):
     return json.dumps({'success': False, 'error': 'User not found'}), 404
 
 
+# Return the current price of a stock
+@app.route('/api/stock/<string:symbol>/', methods=["GET"])
+def get_price(symbol):
+    return stockObj.get_current_price(symbol)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

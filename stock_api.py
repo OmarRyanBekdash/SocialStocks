@@ -16,7 +16,7 @@ class StockGetter():
         return json.dumps(data.json())
 
     def get_current_price(self, symbol):
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={' + symbol + '}&interval=5min&apikey=' + apikey
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=5min&apikey={}'.format(symbol, apikey)
         data = requests.get(url).json()
         last_refreshed = data["Meta Data"]["3. Last Refreshed"]
         return json.dumps(data["Time Series (5min)"][last_refreshed])
