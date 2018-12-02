@@ -13,7 +13,7 @@ class QRViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = UIColor.init(red: 0/255, green: 39/255, blue: 13/255, alpha: 1.0)
         if let currentUser = User.currentUser {
             let qrCode = QRCode("\(currentUser.id)")
             

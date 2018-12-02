@@ -26,13 +26,6 @@ def welcome_message():
 def stock_demo():
     return stockObj.get_current_price('MFST')
 
-@app.route('/api/user/<int:user_id>/')
-def get_user(user_id):
-    user = Users.query.filter_by(id=user_id).first()
-    if user is not None:
-        return json.dumps ({'success': True, 'data': user.serialize()}), 200
-    return json.dumps({'success': False, 'error': 'User not found!'}), 404
-
 @app.route('/api/user/', methods=['POST'])
 def create_user():
     body = json.loads(request.data)
@@ -41,7 +34,8 @@ def create_user():
         user = Users(
             email=body.get('email'),
             username=body.get('username'),
-            password=body.get('password')
+            password=body.get('password'),
+            profile_pic_url=body.get('profile_pic_url')
         )
         db.session.add(user)
         db.session.commit()
@@ -49,11 +43,17 @@ def create_user():
     else:
         correct_user2 = Users.query.filter_by(password=body.get('password')).first()
         if correct_user == correct_user2 and correct_user != None:
-            return json.dumps({'success': True, 'data': correct_user.serialize()})
-        return json.dumps({'success': False, 'error': 'Password is incorrect. Try again.'})
-    return json.dumps({'success': False, 'error': 'Username or Password is not correct. Try again.'})
+            return json.dumps({'success': True, 'data': correct_user.serialize()}), 200
+        return json.dumps({'success': False, 'error': 'Password is incorrect. Try again.'}), 404
+    return json.dumps({'success': False, 'error': 'Username or Password is not correct. Try again.'}), 404
 
-@app.route('/api/user/<int:user_id>/', methods=['POST'])
+@app.route('/api/user/<int:user_id>/', methods=['POST', 'GET'])
+def user_methods(user_id):
+    if request.method == 'POST':
+        return update_user(user_id)
+    elif request.method == 'GET':
+        return get_user(user_id)
+
 def update_user(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
@@ -65,7 +65,57 @@ def update_user(user_id):
         return json.dumps({'success': True, 'data': user.serialize()})
     return json.dumps({'success': False, 'error': 'User does not exist.'})
 
+def get_user(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        return json.dumps ({'success': True, 'data': user.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
+# def get_user(user_id):
+#     user = Users.query.filter_by(id=user_id).first()
+#     if user is not None:
+#         return json.dumps ({'success': True, 'data': user.serialize()}), 200
+#     return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
+def helper(user_id):
+    """
+    Returns an Python object containing all the investments of a user if the user has privacy
+    turned off.
+    """
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        if user.privacy == False:
+            investments = Investments.query.all(user_id=user_id)
+            return investments
+        if user.privacy == True:
+            return []
+
+@app.route('/api/investments/a/<int:user_id>/')
+def get_investments_by_user_privacy(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        if user.privacy == False:
+            investments = helper(user_id)
+            res = {'success': True, 'data': [investment.serialize() for investment in investments]}
+            return json.dumps(res)
+        if user.privacy == True:
+            res = {'success': True, 'data': []}
+            return json.dumps(res)
+    return json.dumps({'success': False, 'error': 'User does not exist.'})
+
+# @app.route('/api/investments/a/<int:user_id>/final/')
+# def get_friends_investments(user_id):
+#     user = Users.query.filter_by(id=user_id).first()
+#     if user is not None:
+#         friends = user.friended.all()
+#         acc = []
+#         for friend_id in friends:
+#             friends_investments = helper(friend_id) # list of investments
+#             for investment in friends_investments: # for each investment, append to accumulator
+#                 acc.append(investment)
+#         res = {'success': True, 'data': acc}
+#         return json.dumps(res)
+#     return json.dumps({'success': False, 'error': 'User does not exist.'})
 
 @app.route('/api/users/', methods=["GET"])
 def get_users():

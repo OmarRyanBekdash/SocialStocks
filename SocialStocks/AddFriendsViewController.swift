@@ -45,6 +45,8 @@ class AddFriendsViewController: UIViewController {
         view.addSubview(QRButton)
         
         
+        
+        
 
         // Do any additional setup after loading the view.
         setUpConstraints()
@@ -71,11 +73,17 @@ class AddFriendsViewController: UIViewController {
     
     @objc func QRCodeButtonPushed() {
         readerVC.delegate = self
+//        present(readerVC, animated: true, completion: nil)
         navigationController?.pushViewController(readerVC, animated: true)
+        //changed to modalViewController
+        //how to put back button that looks good on a ModalViewController
     }
     
     @objc func QRButtonPressed() {
+//        present(QRViewController(), animated: true, completion: nil)
         navigationController?.pushViewController(QRViewController(), animated: true)
+        //changed to modalViewController
+        //how to put back button that looks good on a ModalViewController
     }
     
     
@@ -101,11 +109,23 @@ class AddFriendsViewController: UIViewController {
 extension AddFriendsViewController: QRCodeReaderViewControllerDelegate {
     
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-        reader.stopScanning()
-        self.navigationController?.popViewController(animated: true)
         if let currentUser = User.currentUser, let friendId = Int(result.value) {
-            NetworkManager.makeFriend(fromUser: currentUser.id, fromFriend: friendId) { (userSignInResponse) in
-                print("a")
+            NetworkManager.makeFriend(fromUser: currentUser.id, fromFriend: friendId) { (makeFriendResponse) in
+                
+                if makeFriendResponse.success == true {
+                    //                let friendId = User.id
+                    //                let alertController = UIAlertController(title: "Add Friend", message: "Add \(User.friendId.username)", preferredStyle: .alert)
+                    //
+                    //                self.present(alertController, animated: true, completion: nil)
+                    // work on making another request for the friend's username later
+                    
+                    
+                    reader.stopScanning()
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: "\(makeFriendResponse.error!)", preferredStyle: .alert)
+                    self.present(alertController, animated: true, completion: nil)
+                }
             }
         } else {
             print("Failed unwrapping BLAH")

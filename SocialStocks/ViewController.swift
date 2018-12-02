@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         usernameText.textColor = .black
         usernameText.borderStyle = .roundedRect
         usernameText.delegate = self
+        usernameText.clearButtonMode = UITextField.ViewMode.unlessEditing
         view.addSubview(usernameText)
         
         passwordText = UITextField()
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
         passwordText.textColor = .black
         passwordText.borderStyle = .roundedRect
         passwordText.delegate = self
+        passwordText.clearButtonMode = UITextField.ViewMode.unlessEditing
         view.addSubview(passwordText)
         
         usernameLabel = UILabel()

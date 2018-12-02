@@ -12,5 +12,6 @@ target 'SocialStocks' do
   pod 'SwiftyJSON'
   pod "QRCode"
   pod 'QRCodeReader.swift', '~> 9.0.1'
+  pod 'Charts'
 
 end

@@ -13,25 +13,28 @@ import UIKit
 class SettingsViewController: UIViewController {
     
     var privacySwitch: UISwitch!
+    
     var privacyLabel: UILabel!
     var privacyDescription: UILabel!
-    var profilePicLink: UITextField!
     var profilePicLabel: UILabel!
-    var signoutButton: UIButton!
-    var navigationBar: UINavigationBar!
     var updateLabel: UILabel!
     var updateNameLabel: UILabel!
     var updateUsernameLabel: UILabel!
     var updatePasswordLabel: UILabel!
     var updateEmailLabel: UILabel!
+    
+    var profilePicLink: UITextField!
     var updateName: UITextField!
     var updateUsername: UITextField!
     var updatePassword: UITextField!
     var confirmPassword: UITextField!
     var updateEmail: UITextField!
-    var updateButton: UIButton!
     
+    var signoutButton: UIButton!
+    var updateButton: UIButton!
     var QRButton: UIButton!
+    
+    var navigationBar: UINavigationBar!
     
     
     override func viewDidLoad() {
@@ -58,7 +61,7 @@ class SettingsViewController: UIViewController {
         
         profilePicLink = UITextField()
         profilePicLink.translatesAutoresizingMaskIntoConstraints = false
-        profilePicLink.text = "Add Picture's URL"
+        profilePicLink.placeholder = "Add Picture's URL"
         profilePicLink.font = UIFont.systemFont(ofSize: 16, weight: .light)
         profilePicLink.textAlignment = .left
         profilePicLink.textColor = .gray
@@ -83,7 +86,7 @@ class SettingsViewController: UIViewController {
         
         updateName = UITextField()
         updateName.translatesAutoresizingMaskIntoConstraints = false
-        updateName.text = "Change Name"
+        updateName.placeholder = "Name"
         updateName.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateName.textAlignment = .left
         updateName.textColor = .gray
@@ -100,7 +103,7 @@ class SettingsViewController: UIViewController {
         
         updateUsername = UITextField()
         updateUsername.translatesAutoresizingMaskIntoConstraints = false
-        updateUsername.text = "Change Username"
+        updateUsername.placeholder = User.currentUser?.username
         updateUsername.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateUsername.textAlignment = .left
         updateUsername.textColor = .gray
@@ -117,7 +120,7 @@ class SettingsViewController: UIViewController {
         
         updatePassword = UITextField()
         updatePassword.translatesAutoresizingMaskIntoConstraints = false
-        updatePassword.text = "Change Password"
+        updatePassword.text = User.currentUser?.password
         updatePassword.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updatePassword.textAlignment = .left
         updatePassword.textColor = .gray
@@ -126,7 +129,7 @@ class SettingsViewController: UIViewController {
         
         confirmPassword = UITextField()
         confirmPassword.translatesAutoresizingMaskIntoConstraints = false
-        confirmPassword.text = "Confirm New Password"
+        confirmPassword.placeholder = User.currentUser?.password
         confirmPassword.font = UIFont.systemFont(ofSize: 16, weight: .light)
         confirmPassword.textAlignment = .left
         confirmPassword.textColor = .gray
@@ -143,7 +146,7 @@ class SettingsViewController: UIViewController {
         
         updateEmail = UITextField()
         updateEmail.translatesAutoresizingMaskIntoConstraints = false
-        updateEmail.text = "Change Email"
+        updateEmail.placeholder = User.currentUser?.email
         updateEmail.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateEmail.textAlignment = .left
         updateEmail.textColor = .gray
@@ -160,7 +163,7 @@ class SettingsViewController: UIViewController {
         
         privacyDescription = UILabel()
         privacyDescription.translatesAutoresizingMaskIntoConstraints = false
-        privacyDescription.text = "On: Only friends can see your current stock interests."
+        privacyDescription.text = "Off: Everyone can see your current investment posts."
         privacyDescription.font = UIFont.systemFont(ofSize: 16, weight: .light)
         privacyDescription.textAlignment = .left
         privacyDescription.textColor = .gray
@@ -176,7 +179,7 @@ class SettingsViewController: UIViewController {
         updateButton.setTitle("Update", for: .normal)
         updateButton.backgroundColor = .blue
         updateButton.layer.cornerRadius = 8
-        //signoutButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        updateButton.addTarget(self, action: #selector(updateButtonTapped), for: .touchUpInside)
         view.addSubview(updateButton)
         
         signoutButton = UIButton()
@@ -282,16 +285,48 @@ class SettingsViewController: UIViewController {
     
     @objc func switchStateDidChange(_ sender:UISwitch!) {
         if (sender.isOn == true){
-            privacyDescription.text = "On: Only friends can see your current stock interests."
+            privacyDescription.text = "On: Only friends can see your current investment posts."
         }
         else {
-            privacyDescription.text = "Off: Everyone can see your current stock interests."
-            
+            privacyDescription.text = "Off: Everyone can see your current investment posts."
         }
     }
     
+    @objc func updateButtonTapped() {
+        guard let userId = User.currentUser?.id else { return }
+        NetworkManager.getUser(fromUser: userId) { (userSignInResponse) in
+            if userSignInResponse.success == true {
+                guard let username = userSignInResponse.data?.username else { return }
+                guard let password = userSignInResponse.data?.password else { return }
+                guard let email = userSignInResponse.data?.email else { return }
+                guard let profilePicURL = userSignInResponse.data?.profile_pic_url else { return }
+                
+                NetworkManager.editUser(fromUser: userId, fromEmail: self.updateEmail?.text ?? email, fromUsername: self.updatePassword?.text ?? username, fromPassword: self.updateUsername?.text ?? username, fromConfirmPassword: self.confirmPassword?.text ?? password, fromProfilePicURL: self.profilePicLink?.text ?? profilePicURL, { (userUpdateResponse) in
+                    if self.updatePassword.text! == self.confirmPassword.text! {
+                        User.currentUser = userUpdateResponse.data
+                        if userUpdateResponse.success == true {
+                            //                let viewController = ViewController()
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            let alertController = UIAlertController(title: "Error", message: "One of the fields entered is invalid. Try again.", preferredStyle: .alert)
+                            self.present(alertController, animated: true, completion: nil)
+                        }
+                    } else {
+                        let alertController = UIAlertController(title: "Error", message: "\(userUpdateResponse.error!)", preferredStyle: .alert)
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+                })
+            } else {
+                let alertController = UIAlertController(title: "Error", message: "\(userSignInResponse.error!)", preferredStyle: .alert)
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    //try to fix so that we have the user's username, password, and
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
 }
+
+

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "71FFF6765DD45CE61E13A03031CCB023"
+               BlueprintIdentifier = "DB941EA60FB9383E6A1096D40C6EB9F6"
                BlueprintName = "QRCode"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "QRCode.framework">
