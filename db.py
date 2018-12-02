@@ -25,6 +25,7 @@ class Users(db.Model):
     profile_pic_url = db.Column(db.String, nullable=True)
     investments = db.relationship('Investments', cascade='delete')
     #comments = db.relationship('Comments', cascade='delete')
+    privacy = db.Column(db.Bool, nullable=False)
 
     friended = db.relationship(
         'Users', secondary=friends,
