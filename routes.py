@@ -87,7 +87,7 @@ def delete_user_investment(user_id, investment_id):
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
 # See investments of all of user's friends
-@app.route('/api/investments/<int:user_id>/')
+@app.route('/api/investments/friend/<int:user_id>/')
 def get_friends_investments(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
