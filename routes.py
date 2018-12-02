@@ -2,6 +2,8 @@ import json
 from db import db, Users, friends, Investments, Comments
 from flask import Flask, request
 from stock_api import StockGetter
+from sqlalchemy import desc, asc
+import datetime
 
 db_filename = "SocialStocksDB"
 app = Flask(__name__)
@@ -92,9 +94,9 @@ def post_investment(user_id):
 def get_user_investments(user_id):
     user = Users.query.filter_by(id=user_id)
     if user is not None:
-        user_investments = Investments.query.filter_by(users_id=user_id).first()
+        user_investments = Investments.query.filter_by(users_id=user_id).order_by(desc(Investments.time)).all()
         if user_investments is not None:
-            return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
+            return json.dumps({'success': True, 'data': [inv.serialize() for inv in user_investments]}), 200
         return json.dumps({'success': False, 'error': 'User has no investments!'})
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
   
@@ -134,7 +136,7 @@ def make_friend(user_id, friend_id):
         user.friend(f)
         f.friend(user)
         db.session.add(user)
-        db.session.add(user)
+        db.session.add(f)
         db.session.commit()
         return json.dumps({'success': True, 'data': 'friended!'}), 201
     return json.dumps({'success': False, 'error': 'User or friend not found!'}), 404
