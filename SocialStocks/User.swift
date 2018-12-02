@@ -47,3 +47,8 @@ struct UserSignInResponse: Decodable {
     var data: User?
     var error: String?
 }
+
+struct MakeFriendResponse: Codable {
+    var success: Bool
+    var data: String
+}

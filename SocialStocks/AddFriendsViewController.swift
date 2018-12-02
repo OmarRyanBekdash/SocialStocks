@@ -21,6 +21,8 @@ class AddFriendsViewController: UIViewController {
     }()
     
     var QRCodeButton: UIButton!
+    
+    var QRButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +36,13 @@ class AddFriendsViewController: UIViewController {
         QRCodeButton.addTarget(self, action: #selector(QRCodeButtonPushed), for: .touchUpInside)
         view.addSubview(QRCodeButton)
         
-        
+        QRButton = UIButton()
+        QRButton.translatesAutoresizingMaskIntoConstraints = false
+        QRButton.setTitle("Sign Out", for: .normal)
+        QRButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+        QRButton.layer.cornerRadius = 8
+        QRButton.addTarget(self, action: #selector(QRButtonPressed), for: .touchUpInside)
+        view.addSubview(QRButton)
         
         
 
@@ -51,11 +59,23 @@ class AddFriendsViewController: UIViewController {
             QRCodeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 200)
             ])
         
+        NSLayoutConstraint.activate([
+            QRButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            QRButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            QRButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            QRButton.heightAnchor.constraint(equalToConstant: 60),
+            QRButton.topAnchor.constraint(equalTo: QRCodeButton.bottomAnchor, constant: 30)
+            ])
+        
     }
     
     @objc func QRCodeButtonPushed() {
-        let navViewController = readerVC
-        navigationController?.pushViewController(navViewController, animated: true)
+        readerVC.delegate = self
+        navigationController?.pushViewController(readerVC, animated: true)
+    }
+    
+    @objc func QRButtonPressed() {
+        navigationController?.pushViewController(QRViewController(), animated: true)
     }
     
     
@@ -76,4 +96,25 @@ class AddFriendsViewController: UIViewController {
     */
     
 
+}
+
+extension AddFriendsViewController: QRCodeReaderViewControllerDelegate {
+    
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+        reader.stopScanning()
+        self.navigationController?.popViewController(animated: true)
+        if let currentUser = User.currentUser, let friendId = Int(result.value) {
+            NetworkManager.makeFriend(fromUser: currentUser.id, fromFriend: friendId) { (userSignInResponse) in
+                print("a")
+            }
+        } else {
+            print("Failed unwrapping BLAH")
+        }
+    }
+    
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+        reader.stopScanning()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

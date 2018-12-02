@@ -31,9 +31,12 @@ class SettingsViewController: UIViewController {
     var updateEmail: UITextField!
     var updateButton: UIButton!
     
+    var QRButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         navigationBar = UINavigationBar()
         let navigationItem = UINavigationItem(title: "Settings")

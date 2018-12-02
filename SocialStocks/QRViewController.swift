@@ -13,13 +13,25 @@ class QRViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .green
+        if let currentUser = User.currentUser {
+            let qrCode = QRCode("\(currentUser.id)")
+            
+            let imageView = UIImageView(image: qrCode?.image)
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(imageView)
+            
+            NSLayoutConstraint.activate([
+                imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+                imageView.widthAnchor.constraint(equalToConstant: 300),
+                imageView.heightAnchor.constraint(equalToConstant: 300)
+                ])
+        }
         
-        let qrCode = QRCode("\(User.currentUser?.id)")
-        qrCode?.image
-        
-        let imageView = UIImageView(image: qrCode?.image)
 
         // Do any additional setup after loading the view.
+        
     }
     
     func addFriend() {

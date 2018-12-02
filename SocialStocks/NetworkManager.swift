@@ -120,7 +120,7 @@ class NetworkManager {
                 "username": username,
                 "password": password
         ]
-        Alamofire.request(userQueryURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseData { (response) in
+        Alamofire.request(userQueryURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -192,7 +192,7 @@ class NetworkManager {
     static func editUser(fromEmail email: String, fromUsername username: String, fromPassword password: String, fromUser user: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
         
         let user_id = User.currentUser?.id
-        let editUserURL = "http://35.196.119.50/api/\(user_id)/"
+        let editUserURL = "http://35.196.240.185/api/\(user_id)/"
         
         let parameters :[String:Any] =
             [
@@ -223,30 +223,29 @@ class NetworkManager {
         
     }
     
-    static func makeFriend(fromUser user: Int, fromFriend friend_id: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
+    static func makeFriend(fromUser user_id: Int, fromFriend friend_id: Int, _ didGetUser: @escaping (MakeFriendResponse) -> Void) {
 
-        let user_id = User.currentUser?.id
-        let editUserURL = "http://35.196.119.50/api/\(user_id)/\(friend_id)"
-
-        Alamofire.request(editUserURL, method: .post).validate().responseData{ (response) in
+        let editUserURL = "http://35.196.240.185/api/friend/\(user_id)/\(friend_id)/"
+        // http://35.196.240.185/api/friend/3/4
+        // http://35.196.240.185/api/friend/?user_id=3&friend_id=4
+        
+        Alamofire.request(editUserURL, method: .post, parameters: nil, encoding: URLEncoding.default, headers: nil).validate().responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
                     print(json)
                 }
-
+                
                 let jsonDecoder = JSONDecoder()
-
-                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
-                    didGetUser(user)
+                
+                if let makeFriendResponse = try? jsonDecoder.decode(MakeFriendResponse.self, from: data) {
+                    didGetUser(makeFriendResponse)
                 } else {
                     print("Invalid Data")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-
-
         }
 
     }
