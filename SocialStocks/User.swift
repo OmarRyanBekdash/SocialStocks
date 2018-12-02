@@ -9,24 +9,31 @@
 import UIKit
 import Foundation
 
-struct User: Decodable{
+struct User: Codable{
     
     static var currentUser: User?
     
     let id: Int
-    let name: String
+//    let name: String
     let username: String
     let password: String
-    let stocks: [Stock]!
-    let friends: [User]!
+    let email: String
+//    let stocks: [Stock]!
+//    let friends: [User]!
     
-    init(id: Int, name: String, username: String, password: String, stocks: [Stock], friends: [User]) {
+//    enum CodingKeys: String, CodingKey
+//    {
+//        case id, email, username, password
+//    }
+    
+    init(id: Int, username: String, password: String, email: String) {
         self.id = id
-        self.name = name
+//        self.name = name
         self.username = username
         self.password = password
-        self.stocks = stocks
-        self.friends = friends
+        self.email = email
+//        self.stocks = stocks
+//        self.friends = friends
     }
     
 }

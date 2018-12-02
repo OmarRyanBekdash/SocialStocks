@@ -11,5 +11,6 @@ target 'SocialStocks' do
   pod 'Google/SignIn'
   pod 'SwiftyJSON'
   pod "QRCode"
+  pod 'QRCodeReader.swift', '~> 9.0.1'
 
 end

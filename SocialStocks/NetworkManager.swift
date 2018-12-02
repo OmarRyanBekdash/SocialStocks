@@ -21,8 +21,8 @@ enum SearchType {
 // all errors are associated with the lack of URL to query for the JSON
 class NetworkManager {
     
-    private static let investmentURL = "http://35.196.119.50/api/investments/"
-    private static let userQueryURL = "http://35.196.119.50/api/user/"
+    private static let investmentURL = "http://35.196.240.185/api/investments/"
+    private static let userQueryURL = "http://35.196.240.185/api/user/"
     
     
 //    private static let companyURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}"
@@ -120,7 +120,7 @@ class NetworkManager {
                 "username": username,
                 "password": password
         ]
-        Alamofire.request(userQueryURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+        Alamofire.request(userQueryURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseData { (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -137,20 +137,37 @@ class NetworkManager {
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
-            
         }
+//        Alamofire.request(userQueryURL, method: .post, parameters: parameters).validate().responseData{ (response) in
+//            switch response.result {
+//            case .success(let data):
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                    print(json)
+//                }
+//                
+//                let jsonDecoder = JSONDecoder()
+//                
+//                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
+//                    didGetUser(user)
+//                } else {
+//                    print("Invalid Data")
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//            
+//            
+//        }
     }
     
-    static func userSignUp(fromUsername username: String, fromPassword password: String, fromEmail email: String, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
+    static func userSignUp(fromUsername username: String, fromPassword password: String, fromEmail email: String, fromConfirmPassword confirmPassword: String, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
         
-        let parameters :[String:Any] =
-            [
+        let parameters :[String:Any] = [
                 "username": username,
                 "password": password,
                 "email": email
         ]
-        Alamofire.request(userQueryURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+        Alamofire.request(userQueryURL, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).validate().responseData{ (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -206,38 +223,32 @@ class NetworkManager {
         
     }
     
-//    static func makeFriend(fromUser user: Int, fromFriend friend_id: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
-//        
-//        let user_id = User.currentUser.id
-//        let editUserURL = "http://35.196.119.50/api/\(user_id)/"
-//        
-//        let parameters :[String:Any] =
-//            [
-//                "email": email,
-//                "username": username,
-//                "password": password
-//            ]
-//        Alamofire.request(editUserURL, method: .get, parameters: parameters).validate().responseData{ (response) in
-//            switch response.result {
-//            case .success(let data):
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                    print(json)
-//                }
-//                
-//                let jsonDecoder = JSONDecoder()
-//                
-//                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
-//                    didGetUser(user)
-//                } else {
-//                    print("Invalid Data")
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//            
-//            
-//        }
-//        
-//    }
+    static func makeFriend(fromUser user: Int, fromFriend friend_id: Int, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
+
+        let user_id = User.currentUser?.id
+        let editUserURL = "http://35.196.119.50/api/\(user_id)/\(friend_id)"
+
+        Alamofire.request(editUserURL, method: .post).validate().responseData{ (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+
+                let jsonDecoder = JSONDecoder()
+
+                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
+                    didGetUser(user)
+                } else {
+                    print("Invalid Data")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+
+
+        }
+
+    }
     
 }

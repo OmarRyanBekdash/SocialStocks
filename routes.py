@@ -41,7 +41,7 @@ def create_user():
         return json.dumps({'success': True, 'data': user.serialize()}), 201
     else:
         correct_user2 = Users.query.filter_by(password=body.get('password')).first()
-        if correct_user == corect_user2 and correct_user != None:
+        if correct_user == correct_user2 and correct_user != None:
             return json.dumps({'success': True, 'data': correct_user.serialize()})
         return json.dumps({'success': False, 'error': 'Password is incorrect. Try again.'})
     return json.dumps({'success': False, 'error': 'Username or Password is not correct. Try again.'})

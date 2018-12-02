@@ -29,6 +29,7 @@ PODS:
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.4)"
   - GTMSessionFetcher/Core (1.2.1)
   - QRCode (2.0)
+  - QRCodeReader.swift (9.0.1)
   - SnapKit (4.2.0)
   - SwiftyJSON (4.2.0)
 
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - Alamofire
   - Google/SignIn
   - QRCode
+  - QRCodeReader.swift (~> 9.0.1)
   - SnapKit
   - SwiftyJSON
 
@@ -50,6 +52,7 @@ SPEC REPOS:
     - GoogleToolboxForMac
     - GTMSessionFetcher
     - QRCode
+    - QRCodeReader.swift
     - SnapKit
     - SwiftyJSON
 
@@ -63,9 +66,10 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   QRCode: f98a1886c8f37523704a7512a4c0cd45b34c18a4
+  QRCodeReader.swift: 96292a5612fbc2fd9a0b26f93fa5164c8d02f59d
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 9a926e441cb7f64c22214e58dcc95d96e6842381
+PODFILE CHECKSUM: ad34dad852ac2f4b8610d20686236dd7d2928fd6
 
 COCOAPODS: 1.5.3

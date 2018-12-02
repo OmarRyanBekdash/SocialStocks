@@ -31,20 +31,22 @@ class ViewController: UIViewController {
         
         usernameText = UITextField()
         usernameText.translatesAutoresizingMaskIntoConstraints = false
-        usernameText.text = "Enter Username"
+        usernameText.placeholder = "Enter Username"
         usernameText.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         usernameText.textAlignment = .left
         usernameText.textColor = .black
         usernameText.borderStyle = .roundedRect
+        usernameText.delegate = self
         view.addSubview(usernameText)
         
         passwordText = UITextField()
         passwordText.translatesAutoresizingMaskIntoConstraints = false
-        passwordText.text = "Enter Password"
+        passwordText.placeholder = "Enter Password"
         passwordText.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         passwordText.textAlignment = .left
         passwordText.textColor = .black
         passwordText.borderStyle = .roundedRect
+        passwordText.delegate = self
         view.addSubview(passwordText)
         
         usernameLabel = UILabel()
@@ -150,6 +152,14 @@ class ViewController: UIViewController {
     }
 
 
+    
+}
+
+extension ViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
     
 }
 

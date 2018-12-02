@@ -24,7 +24,7 @@ class MakeAnAccountViewController: UIViewController {
     var confirmPasswordTextField: UITextField!
     
     var signUpButton: UIButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -77,6 +77,7 @@ class MakeAnAccountViewController: UIViewController {
         nameTextField.textAlignment = .left
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        nameTextField.delegate = self
         view.addSubview(nameTextField)
         
         usernameTextField = UITextField()
@@ -87,6 +88,7 @@ class MakeAnAccountViewController: UIViewController {
         usernameTextField.textAlignment = .left
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        usernameTextField.delegate = self
         view.addSubview(usernameTextField)
         
         emailTextField = UITextField()
@@ -97,6 +99,7 @@ class MakeAnAccountViewController: UIViewController {
         emailTextField.textAlignment = .left
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        emailTextField.delegate = self
         view.addSubview(emailTextField)
         
         passwordTextField = UITextField()
@@ -107,6 +110,7 @@ class MakeAnAccountViewController: UIViewController {
         passwordTextField.textAlignment = .left
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         passwordTextField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        passwordTextField.delegate = self
         view.addSubview(passwordTextField)
         
         confirmPasswordTextField = UITextField()
@@ -117,6 +121,7 @@ class MakeAnAccountViewController: UIViewController {
         confirmPasswordTextField.textAlignment = .left
         confirmPasswordTextField.translatesAutoresizingMaskIntoConstraints = false
         confirmPasswordTextField.clearButtonMode = UITextField.ViewMode.unlessEditing
+        confirmPasswordTextField.delegate = self
         view.addSubview(confirmPasswordTextField)
         
         signUpButton = UIButton()
@@ -124,7 +129,7 @@ class MakeAnAccountViewController: UIViewController {
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.backgroundColor = UIColor.init(red: 0/255, green: 39/255, blue: 13/255, alpha: 1.0)
         signUpButton.layer.cornerRadius = 8
-        //        signUpButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonClicked), for: .touchUpInside)
         view.addSubview(signUpButton)
         
         
@@ -214,31 +219,44 @@ class MakeAnAccountViewController: UIViewController {
             signUpButton.topAnchor.constraint(equalTo: confirmPasswordTextField.bottomAnchor, constant: 20)
             ])
         
-        }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
-
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
     
     @objc func signUpButtonClicked() {
-        NetworkManager.userSignUp(fromUsername: usernameTextField.text!, fromPassword: passwordTextField.text!, fromEmail: emailTextField.text!) { (userSignInResponse) in
-            User.currentUser = userSignInResponse.data
-            if userSignInResponse.success == true {
-                let viewController = ViewController()
-                self.navigationController?.pushViewController(viewController, animated: true)
+        NetworkManager.userSignUp(fromUsername: usernameTextField.text!, fromPassword: passwordTextField.text!, fromEmail: emailTextField.text!, fromConfirmPassword: confirmPasswordTextField.text!) { (userSignInResponse) in
+            if self.passwordTextField.text! == self.confirmPasswordTextField.text! {
+                User.currentUser = userSignInResponse.data
+                if userSignInResponse.success == true {
+                    //                let viewController = ViewController()
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: "One of the fields entered is invalid. Try again.", preferredStyle: .alert)
+                    self.present(alertController, animated: true, completion: nil)
+                }
             } else {
-                let alertController = UIAlertController(title: "Error", message: "One of the fields entered is invalid. Try again.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Error", message: "\(userSignInResponse.error!)", preferredStyle: .alert)
                 self.present(alertController, animated: true, completion: nil)
             }
             
         }
     }
+}
+
+extension MakeAnAccountViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
+    }
+    
 }

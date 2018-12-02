@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4406709A21B34A9F00FEE38D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4406709921B34A9F00FEE38D /* SettingsViewController.swift */; };
+		4406709C21B3AC7A00FEE38D /* QRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4406709B21B3AC7A00FEE38D /* QRViewController.swift */; };
 		448CB59D21AF91C70051E59A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448CB59C21AF91C70051E59A /* AppDelegate.swift */; };
 		448CB59F21AF91C70051E59A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448CB59E21AF91C70051E59A /* ViewController.swift */; };
 		448CB5A221AF91C70051E59A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 448CB5A021AF91C70051E59A /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		3666A7C528EA2F51BCFCFE80 /* Pods_SocialStocksTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SocialStocksTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4340EF3816094FD1EC4997C8 /* Pods-SocialStocks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SocialStocks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SocialStocks/Pods-SocialStocks.debug.xcconfig"; sourceTree = "<group>"; };
 		4406709921B34A9F00FEE38D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		4406709B21B3AC7A00FEE38D /* QRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRViewController.swift; sourceTree = "<group>"; };
 		448CB59921AF91C70051E59A /* SocialStocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialStocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		448CB59C21AF91C70051E59A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		448CB59E21AF91C70051E59A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				44E3885921B3083F006162CB /* MakeAnAccountViewController.swift */,
 				448CB5CA21AF92180051E59A /* HomeViewController.swift */,
 				4406709921B34A9F00FEE38D /* SettingsViewController.swift */,
+				4406709B21B3AC7A00FEE38D /* QRViewController.swift */,
 				44ECBEBB21B2401800E7D5B3 /* AddFriendsViewController.swift */,
 				44ECBEBD21B2424300E7D5B3 /* QRScannerController.swift */,
 				448CB5CE21AF92BB0051E59A /* StockTableViewCell.swift */,
@@ -381,6 +384,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCode/QRCode.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -392,6 +396,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCode.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -417,6 +422,7 @@
 				44ECBEBE21B2424300E7D5B3 /* QRScannerController.swift in Sources */,
 				448CB59D21AF91C70051E59A /* AppDelegate.swift in Sources */,
 				44E3885A21B3083F006162CB /* MakeAnAccountViewController.swift in Sources */,
+				4406709C21B3AC7A00FEE38D /* QRViewController.swift in Sources */,
 				448CB5CB21AF92180051E59A /* HomeViewController.swift in Sources */,
 				4406709A21B34A9F00FEE38D /* SettingsViewController.swift in Sources */,
 			);

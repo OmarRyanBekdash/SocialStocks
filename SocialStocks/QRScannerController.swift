@@ -58,7 +58,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             print(error)
             return
         }
-}
+    }
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         
         if metadataObjects.count == 0 {
@@ -82,7 +82,14 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             }
         }
     }
+    
+//    func addFriend() {
+//        if let currentUser = User.currentUser {
+//            NetworkManager.makeFriend(fromUser: currentUser.id, fromFriend: <#T##Int#>, <#T##didGetUser: (UserSignInResponse) -> Void##(UserSignInResponse) -> Void#>)
+//        }
+//    }
 }
+
 
 //func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
 //

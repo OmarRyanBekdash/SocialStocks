@@ -7,8 +7,18 @@
 //
 
 import UIKit
+import QRCodeReader
+import AVFoundation
 
 class AddFriendsViewController: UIViewController {
+    
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+        }
+        
+        return QRCodeReaderViewController(builder: builder)
+    }()
     
     var QRCodeButton: UIButton!
 
@@ -44,7 +54,7 @@ class AddFriendsViewController: UIViewController {
     }
     
     @objc func QRCodeButtonPushed() {
-        let navViewController = QRScannerController()
+        let navViewController = readerVC
         navigationController?.pushViewController(navViewController, animated: true)
     }
     
