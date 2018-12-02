@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
 
@@ -33,7 +34,7 @@ class Users(db.Model):
 
     def getId(self):
         return self.id
-        
+
     def friend(self, user):
         if not self.is_friend(user):
             self.friended.append(user)
@@ -74,6 +75,7 @@ class Investments(db.Model):
     amount = db.Column(db.Float, nullable=False)
     price = db.Column(db.Float, nullable=False)
     text = db.Column(db.String, nullable=True)
+    time = db.Column(db.DateTime, nullable=False)
     #method = db.Column(db.String, nullable=True)
 
     def __init__(self, **kwargs):
@@ -81,6 +83,7 @@ class Investments(db.Model):
         self.amount = kwargs.get('amount', '')
         self.price = kwargs.get('price', '')
         self.text = kwargs.get('text', '')
+        self.time = datetime.datetime.now()
         #self.method = kwargs.get('method', '')
 
     def serialize(self):
@@ -89,7 +92,8 @@ class Investments(db.Model):
             'company': self.company,
             'amount': self.amount,
             'price': self.price,
-            'text': self.text
+            'text': self.text,
+            'time': self.time.isoformat()
             #'method': self.method
         }
 

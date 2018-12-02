@@ -2,6 +2,8 @@ import json
 from db import db, Users, friends, Investments, Comments
 from flask import Flask, request
 from stock_api import StockGetter
+from sqlalchemy import desc, asc
+import datetime
 
 db_filename = "SocialStocksDB"
 app = Flask(__name__)
@@ -23,6 +25,13 @@ def welcome_message():
 @app.route('/stock_demo/')
 def stock_demo():
     return stockObj.get_current_price('MFST')
+
+@app.route('/api/user/<int:user_id>/')
+def get_user(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        return json.dumps ({'success': True, 'data': user.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
 
 @app.route('/api/user/', methods=['POST'])
 def create_user():
@@ -49,9 +58,9 @@ def update_user(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
         body = json.loads(request.data)
-        user.email = body.get('email', user.email)
-        user.username = body.get('username', user.username)
-        user.password = body.get('password', user.password)
+        for key in body:
+            setattr(user, str(key), body.get(key))
+        db.session.add(user)
         db.session.commit()
         return json.dumps({'success': True, 'data': user.serialize()})
     return json.dumps({'success': False, 'error': 'User does not exist.'})
@@ -99,9 +108,9 @@ def post_investment(user_id):
 def get_user_investments(user_id):
     user = Users.query.filter_by(id=user_id)
     if user is not None:
-        user_investments = Investments.query.filter_by(users_id=user_id).first()
+        user_investments = Investments.query.filter_by(users_id=user_id).order_by(desc(Investments.time)).all()
         if user_investments is not None:
-            return json.dumps({'success': True, 'data': user_investments.serialize()}), 200
+            return json.dumps({'success': True, 'data': [inv.serialize() for inv in user_investments]}), 200
         return json.dumps({'success': False, 'error': 'User has no investments!'})
     return json.dumps({'success': False, 'error': 'User not found!'}), 404
   
