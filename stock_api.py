@@ -18,6 +18,5 @@ class StockGetter():
     def get_current_price(self, symbol):
         url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}'.format(symbol, apikey)
         data = requests.get(url).json()
-
         return json.dumps(data["Time Series (Daily)"]["2018-11-28"])
 
