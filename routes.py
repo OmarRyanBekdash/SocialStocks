@@ -26,6 +26,13 @@ def welcome_message():
 def stock_demo():
     return stockObj.get_current_price('MFST')
 
+@app.route('/api/user/<int:user_id>/')
+def get_user(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        return json.dumps ({'success': True, 'data': user.serialize()}), 200
+    return json.dumps({'success': False, 'error': 'User not found!'}), 404
+
 @app.route('/api/user/', methods=['POST'])
 def create_user():
     body = json.loads(request.data)
