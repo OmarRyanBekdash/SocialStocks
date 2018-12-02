@@ -51,8 +51,8 @@ def update_user(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
         body = json.loads(request.data)
-        for key, value in body:
-            user.key = body.get(value, user.key)
+        for key in body:
+            setattr(user, str(key), body.get(key))
         db.session.add(user)
         db.session.commit()
         return json.dumps({'success': True, 'data': user.serialize()})
