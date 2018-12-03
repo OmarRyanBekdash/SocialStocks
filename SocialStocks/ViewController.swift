@@ -10,11 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var logoView: UIImageView!
+    
     var usernameText: UITextField!
     var passwordText: UITextField!
-    
-    var usernameLabel: UILabel!
-    var passwordLabel: UILabel!
     
     var signInButton: UIButton!
     var signUpButton: UIButton!
@@ -26,46 +25,46 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        title = "Sign In"
+        title = "Social Stocks"
         view.backgroundColor = .white
+        
+        logoView = UIImageView()
+        let logo = UIImage(named: "green.png")
+        logoView.translatesAutoresizingMaskIntoConstraints = false
+        logoView.image = logo
+        view.addSubview(logoView)
         
         usernameText = UITextField()
         usernameText.translatesAutoresizingMaskIntoConstraints = false
         usernameText.placeholder = "Enter Username"
-        usernameText.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        usernameText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         usernameText.textAlignment = .left
         usernameText.textColor = .black
         usernameText.borderStyle = .roundedRect
-        usernameText.delegate = self
-        usernameText.clearButtonMode = UITextField.ViewMode.unlessEditing
         view.addSubview(usernameText)
+        
+        let usernameIconView = UIImageView(frame:CGRect(x: 0, y: 0, width: 25, height: 25))
+        let usernameIcon = UIImage(named: "username-icon.png")
+        usernameIconView.image = usernameIcon
+        usernameText.leftViewMode = UITextField.ViewMode.always
+        usernameText.leftView = usernameIconView
+        view.addSubview(usernameIconView)
         
         passwordText = UITextField()
         passwordText.translatesAutoresizingMaskIntoConstraints = false
         passwordText.placeholder = "Enter Password"
-        passwordText.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        passwordText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         passwordText.textAlignment = .left
         passwordText.textColor = .black
         passwordText.borderStyle = .roundedRect
-        passwordText.delegate = self
-        passwordText.clearButtonMode = UITextField.ViewMode.unlessEditing
         view.addSubview(passwordText)
         
-        usernameLabel = UILabel()
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        usernameLabel.text = "Username"
-        usernameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        usernameLabel.textAlignment = .left
-        usernameLabel.textColor = .black
-        view.addSubview(usernameLabel)
-        
-        passwordLabel = UILabel()
-        passwordLabel.translatesAutoresizingMaskIntoConstraints = false
-        passwordLabel.text = "Password"
-        passwordLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        passwordLabel.textAlignment = .left
-        passwordLabel.textColor = .black
-        view.addSubview(passwordLabel)
+        let passwordIconView = UIImageView(frame:CGRect(x: 0, y: 0, width: 18, height: 18))
+        let passwordIcon = UIImage(named: "password-icon.png")
+        passwordIconView.image = passwordIcon
+        passwordText.leftViewMode = UITextField.ViewMode.always
+        passwordText.leftView = passwordIconView
+        view.addSubview(passwordIconView)
         
         signInButton = UIButton()
         signInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +72,6 @@ class ViewController: UIViewController {
         signInButton.backgroundColor = UIColor.init(red: 0/255, green: 39/255, blue: 13/255, alpha: 1.0)
         signInButton.layer.cornerRadius = 8
         signInButton.addTarget(self, action: #selector(pushHomeViewController), for: .touchUpInside)
-//        signInButton.textColor = .black
         view.addSubview(signInButton)
         
         signUpButton = UIButton()
@@ -84,9 +82,6 @@ class ViewController: UIViewController {
         signUpButton.addTarget(self, action: #selector(pushMakeAnAccountController), for: .touchUpInside)
         view.addSubview(signUpButton)
         
-        /*let signIn = UIBarItem()
-         signIn.title = "Sign In Page"
-         self.navigationController?.navigationBar.topItem?.bar = signIn*/
         
         setUpConstraints()
     }
@@ -94,46 +89,39 @@ class ViewController: UIViewController {
     func setUpConstraints() {
         // Setup the constraints for our views
         NSLayoutConstraint.activate([
-            usernameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
-            usernameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 16)
+            logoView.topAnchor.constraint(equalTo: view.topAnchor),
+            logoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            logoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            logoView.heightAnchor.constraint(equalToConstant: 400)
             ])
         NSLayoutConstraint.activate([
-            usernameText.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
+            usernameText.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: 50),
+            usernameText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             usernameText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            usernameText.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 10),
-            usernameText.heightAnchor.constraint(equalToConstant: 25)
+            usernameText.heightAnchor.constraint(equalToConstant: 60)
             ])
         NSLayoutConstraint.activate([
-            passwordLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
-            passwordLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
-            passwordLabel.heightAnchor.constraint(equalToConstant: 16),
-            passwordLabel.topAnchor.constraint(equalTo: usernameText.bottomAnchor, constant: 20)
-            ])
-        NSLayoutConstraint.activate([
+            passwordText.topAnchor.constraint(equalTo: usernameText.bottomAnchor, constant: 50),
             passwordText.leadingAnchor.constraint(equalTo: usernameText.leadingAnchor),
             passwordText.trailingAnchor.constraint(equalTo: usernameText.trailingAnchor),
-            passwordText.heightAnchor.constraint(equalToConstant: 25),
-            passwordText.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 10)
+            passwordText.heightAnchor.constraint(equalToConstant: 60)
             ])
-        
         NSLayoutConstraint.activate([
             signInButton.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 50),
-            signInButton.heightAnchor.constraint(equalToConstant: 60),
-            signInButton.leadingAnchor.constraint(equalTo: usernameText.leadingAnchor),
-            signInButton.trailingAnchor.constraint(equalTo: usernameText.trailingAnchor)
+            signInButton.leadingAnchor.constraint(equalTo: passwordText.leadingAnchor),
+            signInButton.trailingAnchor.constraint(equalTo: passwordText.trailingAnchor),
+            signInButton.heightAnchor.constraint(equalToConstant: 60)
             ])
-        
         NSLayoutConstraint.activate([
-            signUpButton.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 30),
-            signUpButton.leadingAnchor.constraint(equalTo: usernameText.leadingAnchor),
-            signUpButton.trailingAnchor.constraint(equalTo: usernameText.trailingAnchor),
+            signUpButton.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 50),
+            signUpButton.leadingAnchor.constraint(equalTo: passwordText.leadingAnchor),
+            signUpButton.trailingAnchor.constraint(equalTo: passwordText.trailingAnchor),
             signUpButton.heightAnchor.constraint(equalToConstant: 60)
             ])
         
     }
-    
+
+
     @objc func pushHomeViewController() {
         NetworkManager.userSignIn(fromUsername: usernameText.text!, fromPassword: passwordText.text!) { (userSignInResponse) in
             User.currentUser = userSignInResponse.data
@@ -143,6 +131,7 @@ class ViewController: UIViewController {
             } else {
                 let alertController = UIAlertController(title: "Error", message: "\(userSignInResponse.error!)", preferredStyle: .alert)
                 self.present(alertController, animated: true, completion: nil)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
             }
         }
         

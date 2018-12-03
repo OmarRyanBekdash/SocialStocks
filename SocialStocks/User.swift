@@ -18,22 +18,22 @@ struct User: Codable{
     let username: String
     let password: String
     let email: String
-    let profile_pic_url: String
+    let profile_pic_url: String = ""
 //    let stocks: [Stock]!
 //    let friends: [User]!
     
-//    enum CodingKeys: String, CodingKey
-//    {
-//        case id, email, username, password
-//    }
+    enum CodingKeys: String, CodingKey
+    {
+        case id, email, username, password
+    }
     
-    init(id: Int, username: String, password: String, email: String, profile_pic_url: String) {
+    init(id: Int, username: String, password: String, email: String) {
         self.id = id
 //        self.name = name
         self.username = username
         self.password = password
         self.email = email
-        self.profile_pic_url = profile_pic_url
+//        self.profile_pic_url = profile_pic_url
 //        self.stocks = stocks
 //        self.friends = friends
     }
@@ -61,4 +61,3 @@ struct UserUpdateResponse: Codable {
     var data: User?
     var error: String?
 }
-

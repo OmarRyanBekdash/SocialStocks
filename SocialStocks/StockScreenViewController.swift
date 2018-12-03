@@ -12,11 +12,16 @@ class StockScreenViewController: UIViewController {
     
     var row: Int!
     
-    var nameLabel: UILabel!
-    var priceLabel: UILabel!
-    var stockView: UIImageView!
+    var stockLabel: UILabel!
+    var highLabel: UILabel!
+    var lowLabel: UILabel!
+    var volumeLabel: UILabel!
+    var openLabel: UILabel!
+    var closeLabel: UILabel!
+    var changeLabel: UILabel!
+    var changePercentLabel: UILabel!
     
-//    weak var delegate: SaveStock?
+    var graphView: UIImageView!
     
     let reuseIdentifier = "stockCellReuse"
     let cellHeight: CGFloat = 80
@@ -24,33 +29,81 @@ class StockScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Personal Stocks"
+        title = "Insert Stock Name here"
         view.backgroundColor = UIColor.init(red: 130, green: 158, blue: 161, alpha: 1.0)
         
-        nameLabel = UILabel()
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.text = "Stock + name whatever it is"
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        nameLabel.textAlignment = .left
-        nameLabel.textColor = .black
-        view.addSubview(nameLabel)
+        stockLabel = UILabel()
+        stockLabel.translatesAutoresizingMaskIntoConstraints = false
+        stockLabel.text = "Stock"
+        stockLabel.font = UIFont.systemFont(ofSize: 48, weight: .bold)
+        stockLabel.textAlignment = .left
+        stockLabel.textColor = .black
+        view.addSubview(stockLabel)
         
-        priceLabel = UILabel()
-        priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        priceLabel.text = "Price + $$"
-        priceLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
-        priceLabel.textAlignment = .left
-        priceLabel.textColor = .black
-        view.addSubview(priceLabel)
+        changeLabel = UILabel()
+        changeLabel.translatesAutoresizingMaskIntoConstraints = false
+        changeLabel.text = "Change..."
+        changeLabel.font = UIFont.systemFont(ofSize: 20, weight: .light)
+        changeLabel.textAlignment = .right
+        changeLabel.textColor = .green
+        view.addSubview(changeLabel)
         
-//        let back = UIBarButtonItem(title: "back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(backMethod))
-//        self.navigationItem.leftBarButtonItem = back
+        changePercentLabel = UILabel()
+        changePercentLabel.translatesAutoresizingMaskIntoConstraints = false
+        changePercentLabel.text = "Change %"
+        changePercentLabel.font = UIFont.systemFont(ofSize: 20, weight: .light)
+        changePercentLabel.textAlignment = .right
+        changePercentLabel.textColor = .red
+        view.addSubview(changePercentLabel)
         
         
-        stockView = UIImageView()
-        stockView.translatesAutoresizingMaskIntoConstraints = false
-        stockView.contentMode = .scaleAspectFit
-        view.addSubview(stockView)
+        graphView = UIImageView()
+        let graph = UIImage(named: "green.png")
+        graphView.translatesAutoresizingMaskIntoConstraints = false
+        graphView.image = graph
+        view.addSubview(graphView)
+        
+        
+        volumeLabel = UILabel()
+        volumeLabel.translatesAutoresizingMaskIntoConstraints = false
+        volumeLabel.text = "Volume\t\t\tdata"
+        volumeLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        volumeLabel.textAlignment = .left
+        volumeLabel.textColor = .black
+        view.addSubview(volumeLabel)
+        
+        highLabel = UILabel()
+        highLabel.translatesAutoresizingMaskIntoConstraints = false
+        highLabel.text = "High\t\t\tdata"
+        highLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        highLabel.textAlignment = .left
+        highLabel.textColor = .black
+        view.addSubview(highLabel)
+        
+        lowLabel = UILabel()
+        lowLabel.translatesAutoresizingMaskIntoConstraints = false
+        lowLabel.text = "Low\t\t\tdata"
+        lowLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        lowLabel.textAlignment = .left
+        lowLabel.textColor = .black
+        view.addSubview(lowLabel)
+        
+        openLabel = UILabel()
+        openLabel.translatesAutoresizingMaskIntoConstraints = false
+        openLabel.text = "Open\t\t\tdata"
+        openLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        openLabel.textAlignment = .right
+        openLabel.textColor = .black
+        view.addSubview(openLabel)
+        
+        closeLabel = UILabel()
+        closeLabel.translatesAutoresizingMaskIntoConstraints = false
+        closeLabel.text = "Close\t\t\tdata"
+        closeLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        closeLabel.textAlignment = .right
+        closeLabel.textColor = .black
+        view.addSubview(closeLabel)
+        
         
         setupConstraints()
         
@@ -58,31 +111,59 @@ class StockScreenViewController: UIViewController {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            nameLabel.heightAnchor.constraint(equalToConstant: 40)
+            stockLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            stockLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            stockLabel.trailingAnchor.constraint(equalTo: view.centerXAnchor)
             ])
-        
         NSLayoutConstraint.activate([
-            priceLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            priceLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
-            priceLabel.heightAnchor.constraint(equalToConstant: 40)
+            changeLabel.topAnchor.constraint(equalTo: stockLabel.topAnchor),
+            changeLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: 20),
+            changeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
             ])
-        
         NSLayoutConstraint.activate([
-            stockView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            stockView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            stockView.heightAnchor.constraint(equalToConstant: 200),
-            stockView.widthAnchor.constraint(equalToConstant: 300)
+            changePercentLabel.topAnchor.constraint(equalTo: changeLabel.bottomAnchor, constant: 5),
+            changePercentLabel.leadingAnchor.constraint(equalTo: changeLabel.leadingAnchor),
+            changePercentLabel.trailingAnchor.constraint(equalTo: changeLabel.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            graphView.topAnchor.constraint(equalTo: changePercentLabel.bottomAnchor, constant: 20),
+            graphView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            graphView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            graphView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            volumeLabel.topAnchor.constraint(equalTo: graphView.bottomAnchor, constant: 20),
+            volumeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            ])
+        NSLayoutConstraint.activate([
+            highLabel.topAnchor.constraint(equalTo: volumeLabel.bottomAnchor, constant: 10),
+            highLabel.leadingAnchor.constraint(equalTo: stockLabel.leadingAnchor),
+            highLabel.trailingAnchor.constraint(equalTo: stockLabel.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            lowLabel.topAnchor.constraint(equalTo: highLabel.bottomAnchor, constant: 10),
+            lowLabel.leadingAnchor.constraint(equalTo: stockLabel.leadingAnchor),
+            lowLabel.trailingAnchor.constraint(equalTo: stockLabel.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            openLabel.topAnchor.constraint(equalTo: highLabel.topAnchor),
+            openLabel.leadingAnchor.constraint(equalTo: highLabel.trailingAnchor),
+            openLabel.trailingAnchor.constraint(equalTo: changeLabel.trailingAnchor)
+            ])
+        NSLayoutConstraint.activate([
+            closeLabel.topAnchor.constraint(equalTo: lowLabel.topAnchor),
+            closeLabel.leadingAnchor.constraint(equalTo: openLabel.leadingAnchor),
+            closeLabel.trailingAnchor.constraint(equalTo: changeLabel.trailingAnchor)
             ])
         
     }
-//    
-//    @objc func backMethod() {
-//        // If let statements can also chain boolean checks after them, like a normal if statement.
-//        navigationController?.pushViewController(HomeViewController(), animated: true)
-//    }
-
+    //
+    //    @objc func backMethod() {
+    //        // If let statements can also chain boolean checks after them, like a normal if statement.
+    //        navigationController?.pushViewController(HomeViewController(), animated: true)
+    //    }
+    
     
     
 }
+

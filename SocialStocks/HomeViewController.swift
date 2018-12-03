@@ -10,11 +10,13 @@ import UIKit
 import Alamofire
 //import CryptoSwift
 
-//protocol UISearchResultsUpdating: class {
-//
+protocol StockTableViewDelegate: class {
+    func arrayChanged(array: [Stock])
+    
 //    func updateSearchResults()
-//}
+//
 //    func encrypt(password: String)
+}
 
 
 
@@ -31,11 +33,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cellHeight: CGFloat = 80
     
     var searchController: UISearchController!
-//    var searchBar: UISearchBar!
-//    maybe???
+    //    var searchBar: UISearchBar!
+    //    maybe???
     
     
-    let searchBy: SearchType = .company //Change this to serach by company or different ways
+//    let searchBy: SearchType = .company //Change this to serach by company or different ways
     
     var navigationBar: UINavigationBar!
     
@@ -49,10 +51,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //title = "Search"
         
-//       let s1 = Stock(company: "Apple", price: "178.32", amount: "150")
-//        let s2 = Stock(company: "Microsoft", price: "109.48", amount: "135")
-//
-//        dataStocksStarter = [s1, s2]
+        //       let s1 = Stock(company: "Apple", price: "178.32", amount: "150")
+        //        let s2 = Stock(company: "Microsoft", price: "109.48", amount: "135")
+        //
+        //        dataStocksStarter = [s1, s2]
         
         
         
@@ -63,8 +65,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         navigationBar.isTranslucent = false
         navigationBar.barStyle = .blackOpaque
-//        navigationBar.barTintColor =
-//        .barTintColor attribute??
+        //        navigationBar.barTintColor =
+        //        .barTintColor attribute??
         navigationBar.tintColor = .gray
         navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "BackButtonImage")
         view.addSubview(navigationBar)
@@ -77,7 +79,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.addSubview(header)
         
         
-
+        
         stockView = UITableView()
         stockView = UITableView(frame: .zero)
         stockView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,16 +91,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false //lets try out true after debugging
-        if searchBy == .company {
-            searchController.searchBar.placeholder = "Search by company"
-        }
-        if searchBy == .amount {
-            searchController.searchBar.placeholder = "Search by amount"
-        }
-        if searchBy == .price {
-            searchController.searchBar.placeholder = "Search by price"
-        }
-//        searchController.searchBar.placeholder = searchBy == .company ?: "Search by company", .amount ?: "Search by amount", .price ?: "Search by price"
+//        if searchBy == .company {
+//            searchController.searchBar.placeholder = "Search by company"
+//        }
+//        if searchBy == .amount {
+//            searchController.searchBar.placeholder = "Search by amount"
+//        }
+//        if searchBy == .price {
+//            searchController.searchBar.placeholder = "Search by price"
+//        }
+        //        searchController.searchBar.placeholder = searchBy == .company ?: "Search by company", .amount ?: "Search by amount", .price ?: "Search by price"
         searchController.searchBar.sizeToFit()
         stockView.tableHeaderView = searchController.searchBar
         navigationItem.searchController = searchController
@@ -107,16 +109,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         
-//        let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
-//        self.navigationItem.leftBarButtonItem = notifications
+        //        let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
+        //        self.navigationItem.leftBarButtonItem = notifications
         
         let settings = UIBarButtonItem(image: UIImage(named: "settingsGear"), style: UIBarButtonItem.Style.done, target: self, action: #selector(settingsButtonTapped))
         self.navigationItem.leftBarButtonItem = settings
         
         
-//        let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
-//        self.navigationItem.rightBarButtonItem = addFriend
-//
+        //        let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
+        //        self.navigationItem.rightBarButtonItem = addFriend
+        //
         
         let addFriend = UIBarButtonItem(image: UIImage(named: "add"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
         addFriend.accessibilityFrame = CGRect(x: 0.0, y: 0.0, width: 5, height: 5)
@@ -138,12 +140,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
          //notifications.addTarget(self, action: #selector(pushNavViewController), for: .touchUpInside)
          view.addSubview(addFriend)*/
         
-//        let back = UIBarButtonItem()
-//        back.title = "Back"
-//        self.navigationController?.navigationBar.topItem?.backBarButtonItem = back
-//
-    
-
+        //        let back = UIBarButtonItem()
+        //        back.title = "Back"
+        //        self.navigationController?.navigationBar.topItem?.backBarButtonItem = back
+        //
+        
+        
         
         setupConstraints()
         
@@ -158,10 +160,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             stockView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
         
-//        NSLayoutConstraint.activate([
-//
-//            ])
-// for navigation bar?????
+        //        NSLayoutConstraint.activate([
+        //
+        //            ])
+        // for navigation bar?????
         
         NSLayoutConstraint.activate([
             header.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 8),
@@ -244,47 +246,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             if !searchText.isEmpty {
-                switch searchBy {
-                case .company:
-                    NetworkManager.getInvestment(fromCompany: searchText) { (investmentsArray) in
-                        self.filteredStocks = investmentsArray //update Tableview
-                    }
-                    
-                    DispatchQueue.main.async{
-                        self.stockView.reloadData()
-                    }
-                    print("Search by company")
-                case .price:
-                    NetworkManager.getInvestment(fromPrice: searchText) { (investmentsArray) in
-                        self.filteredStocks = investmentsArray
-                    }
-                    
+                NetworkManager.getInvestment(fromCompany: searchText, fromAmount: searchText, fromPrice: searchText) { (stocks) in
+                    self.filteredStocks = stocks
+
                     DispatchQueue.main.async {
                         self.stockView.reloadData()
                     }
-                    print("Search by price")
-                    
-                case .amount:
-                    NetworkManager.getInvestment(fromAmount: searchText) { (investmentsArray) in
-                        self.filteredStocks = investmentsArray
-                    }
-                    
-                    DispatchQueue.main.async {
-                        self.stockView.reloadData()
-                    }
-                    print("Search by amount")
+
+                    print("Search")
                 }
-                
-            }
-            else {
-                self.filteredStocks = []
             }
         }
         self.stockView.reloadData()
     }
-
+    
 }
-
+    
 
 
 //extension HomeViewController: {
@@ -301,6 +278,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 //}
 
+
+extension HomeViewController: StockTableViewDelegate {
+    func arrayChanged(array: [Stock]) {
+        
+    }
+}
 
 
 extension HomeViewController: UISearchBarDelegate {

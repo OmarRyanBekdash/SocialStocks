@@ -83,34 +83,5 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
         }
     }
     
-//    func addFriend() {
-//        if let currentUser = User.currentUser {
-//            NetworkManager.makeFriend(fromUser: currentUser.id, fromFriend: <#T##Int#>, <#T##didGetUser: (UserSignInResponse) -> Void##(UserSignInResponse) -> Void#>)
-//        }
-//    }
 }
 
-
-//func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-//
-//    if metadataObjects.count == 0 {
-//        qrCodeFrameView?.frame = CGRect.zero
-//        //messageLabel.text = "No QR/barcode is detected"
-//        print("No QR/barcode is detected")
-//        return
-//    }
-//
-//    let metadataObj = metadataObjects[0] as! AVMetadataMachineReadableCodeObject
-//
-//    if supportedCodeTypes.contains(metadataObj.type) {
-//
-//        let barCodeObject = videoPreviewLayer?.transformedMetadataObject(for: metadataObj)
-//        qrCodeFrameView?.frame = barCodeObject!.bounds
-//
-//        if metadataObj.stringValue != nil {
-//
-//
-//            print(metadataObj.stringValue as Any)
-//        }
-//    }
-//}

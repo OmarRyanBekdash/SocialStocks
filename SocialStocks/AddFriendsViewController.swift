@@ -38,8 +38,8 @@ class AddFriendsViewController: UIViewController {
         
         QRButton = UIButton()
         QRButton.translatesAutoresizingMaskIntoConstraints = false
-        QRButton.setTitle("Sign Out", for: .normal)
-        QRButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+        QRButton.setTitle("Your QR Code", for: .normal)
+        QRButton.backgroundColor = UIColor.init(red: 0/255, green: 39/255, blue: 13/255, alpha: 1.0)
         QRButton.layer.cornerRadius = 8
         QRButton.addTarget(self, action: #selector(QRButtonPressed), for: .touchUpInside)
         view.addSubview(QRButton)
@@ -93,15 +93,6 @@ class AddFriendsViewController: UIViewController {
 
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 
 }

@@ -22,21 +22,44 @@ enum SearchType {
 class NetworkManager {
     
     private static let investmentURL = "http://35.196.240.185/api/investments/"
-    private static let userQueryURL = "http://localhost:5000/api/user/"//"http://35.196.240.185/api/user/"
+    private static let userQueryURL = "http://35.196.240.185/api/user/"
     
     
-//    private static let companyURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}"
+    private static let companyURL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={}&apikey={}"
     
-    //private static let priceURL = ""
+    private static let priceURL = ""
     //URL's might not be different
     
-    static func getInvestment(fromCompany company: String, _ didGetStock: @escaping ([Stock]) -> Void) {
-        
+    static func getInvestment(fromCompany company: String, fromAmount amount: String, fromPrice price: String, _ didGetStock: @escaping ([Stock]) -> Void) {
+
         let parameters :[String:Any] =
         [
-            "q": company
+            "company": company,
+            "amount": amount,
+            "price": price
         ]
-        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+        Alamofire.request(investmentURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: nil).validate().responseData{ (response) in
+            switch response.result {
+            case .success(let data):
+                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    print(json)
+                }
+
+                let jsonDecoder = JSONDecoder()
+
+                if let stockSearchResponse = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
+                    didGetStock(stockSearchResponse.data)
+                } else {
+                    print("Invalid Data")
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+        }
+    }
+}
+    
+    static func getInvestment(_ didGetStock: @escaping ([Stock]) -> Void) {
+        Alamofire.request(investmentURL, method: .get, encoding: JSONEncoding.default, headers: nil).validate().responseData{ (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -45,73 +68,73 @@ class NetworkManager {
                 
                 let jsonDecoder = JSONDecoder()
                 
-                if let company = try? jsonDecoder.decode(StockSearchResponse.self, from: data) { //everything online says to make a struct, but in p7 we didn't make a struct, and RecipeSearchResponse worked
-                    didGetStock(company.results)
+                if let stocksSearchResponse = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
+                    didGetStock(stocksSearchResponse.data)
                 } else {
                     print("Invalid Data")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
-            
         }
+        
     }
     
-    static func getInvestment(fromAmount amount: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
-        
-        let parameters : [String:Any] =
-        [
-            "q": amount
-        ]
-        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
-            switch response.result {
-            case .success(let data):
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                    print(json)
-                }
-                
-                let jsonDecoder = JSONDecoder()
-                
-                if let amount = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
-                    didGetInvestments(amount.results)
-                } else {
-                    print("Invalid Data")
-                }
-            
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            
-        }
-    }
-    
-    static func getInvestment(fromPrice price: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
-        
-        let parameters : [String:Any] =
-        [
-            "q": price
-        ]
-        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
-            switch response.result {
-            case .success(let data):
-                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                    print(json)
-                }
-                
-                let jsonDecoder = JSONDecoder()
-                
-                if let price = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
-                    didGetInvestments(price.results)
-                } else {
-                    print("Invalid Data")
-                }
-            
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
+
+//    static func getInvestment(fromAmount amount: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
+//
+//        let parameters : [String:Any] =
+//        [
+//            "q": amount
+//        ]
+//        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+//            switch response.result {
+//            case .success(let data):
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                    print(json)
+//                }
+//
+//                let jsonDecoder = JSONDecoder()
+//
+//                if let amount = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
+//                    didGetInvestments(amount.results)
+//                } else {
+//                    print("Invalid Data")
+//                }
+//
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//
+//        }
+//    }
+//
+//    static func getInvestment(fromPrice price: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
+//
+//        let parameters : [String:Any] =
+//        [
+//            "q": price
+//        ]
+//        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
+//            switch response.result {
+//            case .success(let data):
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                    print(json)
+//                }
+//
+//                let jsonDecoder = JSONDecoder()
+//
+//                if let price = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
+//                    didGetInvestments(price.results)
+//                } else {
+//                    print("Invalid Data")
+//                }
+//
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
     
     static func userSignIn(fromUsername username: String, fromPassword password: String, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
         
@@ -269,15 +292,11 @@ class NetworkManager {
         
     }
     
-    static func turnPrivacy(fromUser user_id: Int, fromPrivacy privacy: Bool, fromFriend friend_id: Int, _ didGetUser: @escaping (PrivacyResponse) -> Void) {
+    static func turnPrivacy(fromUser user_id: Int, _ didGetUser: @escaping (PrivacyResponse) -> Void) {
         
-        let privacyChangeOutputURL = "http://35.196.240.185/api/investments/a/\(user_id)/"
+        let privacyChangeOutputURL = "http://35.196.240.185/api/investments/a/\(user_id)/final/"
         
-        let parameters :[String:Any] =
-            [
-                "privacy": privacy
-            ]
-        Alamofire.request(privacyChangeOutputURL, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
+        Alamofire.request(privacyChangeOutputURL, method: .get, encoding: URLEncoding.queryString, headers: nil).validate().responseData{ (response) in
             switch response.result {
             case .success(let data):
                 if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
@@ -296,4 +315,30 @@ class NetworkManager {
             }
         }
     }
+    
+//    static func getFriends(fromUser user_id: Int, _ didGetUser: @escaping (PrivacyResponse) -> Void) {
+//        
+//        let getFriendsURL = "http://35.196.240.185/api/\(user_id)/friends/"
+//        
+//        Alamofire.request(getFriendsURL, method: .get, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
+//            switch response.result {
+//            case .success(let data):
+//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+//                    print(json)
+//                }
+//                
+//                let jsonDecoder = JSONDecoder()
+//                
+//                if let updatedUser = try? jsonDecoder.decode(PrivacyResponse.self, from: data) {
+//                    didGetUser(updatedUser)
+//                } else {
+//                    print("Invalid Data")
+//                }
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+    
+    
 }

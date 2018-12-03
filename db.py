@@ -22,10 +22,10 @@ class Users(db.Model):
     email = db.Column(db.String, nullable=False)
     username = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
-    profile_pic_url = db.Column(db.String, nullable=True)
+    profilePicUrl = db.Column(db.String, nullable=True)
     investments = db.relationship('Investments', cascade='delete')
     #comments = db.relationship('Comments', cascade='delete')
-    # privacy = db.Column(db.Boolean, nullable=False)
+    privacy = db.Column(db.Boolean, nullable=False)
 
     friended = db.relationship(
         'Users', secondary=friends,
@@ -56,7 +56,7 @@ class Users(db.Model):
         self.email = kwargs.get('email', '')
         self.username = kwargs.get('username', '')
         self.password = kwargs.get('password', '')
-        self.profile_pic_url = kwargs.get('profile_pic_url', None)
+        self.profilePicUrl = kwargs.get('profilePicUrl', None)
 
     def serialize(self):
         return {
@@ -64,7 +64,7 @@ class Users(db.Model):
             'email': self.email,
             'username': self.username,
             'password': self.password,
-            'profile_pic_url': self.profile_pic_url
+            'profilePicUrl': self.profilePicUrl
         }
 
 

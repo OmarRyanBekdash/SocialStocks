@@ -80,8 +80,8 @@ class StockTableViewCell: UITableViewCell {
     func configure(for stock: Stock) {
         
         companyLabel.text = stock.company
-        priceLabel.text = stock.price
-        amountLabel.text = stock.amount
+        priceLabel.text = "\(stock.price)"
+        amountLabel.text = "\(stock.amount)"
         
     }
     

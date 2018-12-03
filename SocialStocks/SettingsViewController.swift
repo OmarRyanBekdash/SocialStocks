@@ -36,6 +36,8 @@ class SettingsViewController: UIViewController {
     
     var navigationBar: UINavigationBar!
     
+    weak var delegate: StockTableViewDelegate?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +105,7 @@ class SettingsViewController: UIViewController {
         
         updateUsername = UITextField()
         updateUsername.translatesAutoresizingMaskIntoConstraints = false
-        updateUsername.placeholder = User.currentUser?.username
+        updateUsername.text = User.currentUser?.username
         updateUsername.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateUsername.textAlignment = .left
         updateUsername.textColor = .gray
@@ -129,7 +131,7 @@ class SettingsViewController: UIViewController {
         
         confirmPassword = UITextField()
         confirmPassword.translatesAutoresizingMaskIntoConstraints = false
-        confirmPassword.placeholder = User.currentUser?.password
+        confirmPassword.text = User.currentUser?.password
         confirmPassword.font = UIFont.systemFont(ofSize: 16, weight: .light)
         confirmPassword.textAlignment = .left
         confirmPassword.textColor = .gray
@@ -146,7 +148,7 @@ class SettingsViewController: UIViewController {
         
         updateEmail = UITextField()
         updateEmail.translatesAutoresizingMaskIntoConstraints = false
-        updateEmail.placeholder = User.currentUser?.email
+        updateEmail.text = User.currentUser?.email
         updateEmail.font = UIFont.systemFont(ofSize: 16, weight: .light)
         updateEmail.textAlignment = .left
         updateEmail.textColor = .gray
@@ -187,7 +189,7 @@ class SettingsViewController: UIViewController {
         signoutButton.setTitle("Sign Out", for: .normal)
         signoutButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
         signoutButton.layer.cornerRadius = 8
-        //signoutButton.addTarget(self, action: #selector(), for: .touchUpInside)
+        signoutButton.addTarget(self, action: #selector(signOutButtonPushed), for: .touchUpInside)
         view.addSubview(signoutButton)
         
         
@@ -285,12 +287,21 @@ class SettingsViewController: UIViewController {
     
     @objc func switchStateDidChange(_ sender:UISwitch!) {
         if (sender.isOn == true){
-            privacyDescription.text = "On: Only friends can see your current investment posts."
+            guard let userId = User.currentUser?.id else { return }
+            NetworkManager.turnPrivacy(fromUser: userId) { (privacyResponse) in
+                //set array from previous view controller equal to array from function
+                    self.delegate?.arrayChanged(array: privacyResponse.data)
+            }
+            
+            privacyDescription.text = "Only friends can see your current investment posts."
         }
         else {
-            privacyDescription.text = "Off: Everyone can see your current investment posts."
+            NetworkManager.getInvestment { (stocks) in
+                    self.delegate?.arrayChanged(array: stocks)
+                }
+            }
+            privacyDescription.text = "Everyone can see your current investment posts."
         }
-    }
     
     @objc func updateButtonTapped() {
         guard let userId = User.currentUser?.id else { return }
@@ -301,7 +312,7 @@ class SettingsViewController: UIViewController {
                 guard let email = userSignInResponse.data?.email else { return }
                 guard let profilePicURL = userSignInResponse.data?.profile_pic_url else { return }
                 
-                NetworkManager.editUser(fromUser: userId, fromEmail: self.updateEmail?.text ?? email, fromUsername: self.updatePassword?.text ?? username, fromPassword: self.updateUsername?.text ?? username, fromConfirmPassword: self.confirmPassword?.text ?? password, fromProfilePicURL: self.profilePicLink?.text ?? profilePicURL, { (userUpdateResponse) in
+                NetworkManager.editUser(fromUser: userId, fromEmail: self.updateEmail?.text ?? email, fromUsername: self.updateUsername?.text ?? username, fromPassword: self.updatePassword?.text ?? password, fromConfirmPassword: self.confirmPassword?.text ?? password, fromProfilePicURL: self.profilePicLink?.text ?? profilePicURL, { (userUpdateResponse) in
                     if self.updatePassword.text! == self.confirmPassword.text! {
                         User.currentUser = userUpdateResponse.data
                         if userUpdateResponse.success == true {
@@ -312,7 +323,7 @@ class SettingsViewController: UIViewController {
                             self.present(alertController, animated: true, completion: nil)
                         }
                     } else {
-                        let alertController = UIAlertController(title: "Error", message: "\(userUpdateResponse.error!)", preferredStyle: .alert)
+                        let alertController = UIAlertController(title: "Error", message: "Error occurred!", preferredStyle: .alert)
                         self.present(alertController, animated: true, completion: nil)
                     }
                 })
@@ -321,6 +332,12 @@ class SettingsViewController: UIViewController {
                 self.present(alertController, animated: true, completion: nil)
             }
         }
+    }
+    
+    @objc func signOutButtonPushed () {
+        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
+    
     }
     
     //try to fix so that we have the user's username, password, and

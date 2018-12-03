@@ -34,8 +34,7 @@ def create_user():
         user = Users(
             email=body.get('email'),
             username=body.get('username'),
-            password=body.get('password'),
-            profile_pic_url=body.get('profile_pic_url')
+            password=body.get('password')
         )
         db.session.add(user)
         db.session.commit()
@@ -103,19 +102,19 @@ def get_investments_by_user_privacy(user_id):
             return json.dumps(res)
     return json.dumps({'success': False, 'error': 'User does not exist.'})
 
-# @app.route('/api/investments/a/<int:user_id>/final/')
-# def get_friends_investments(user_id):
-#     user = Users.query.filter_by(id=user_id).first()
-#     if user is not None:
-#         friends = user.friended.all()
-#         acc = []
-#         for friend_id in friends:
-#             friends_investments = helper(friend_id) # list of investments
-#             for investment in friends_investments: # for each investment, append to accumulator
-#                 acc.append(investment)
-#         res = {'success': True, 'data': acc}
-#         return json.dumps(res)
-#     return json.dumps({'success': False, 'error': 'User does not exist.'})
+@app.route('/api/investments/a/<int:user_id>/final/')
+def get_friends_investments_with_privacy(user_id):
+    user = Users.query.filter_by(id=user_id).first()
+    if user is not None:
+        friends = user.friended.all()
+        acc = []
+        for friend_id in friends:
+            friends_investments = helper(friend_id) # list of investments
+            for investment in friends_investments: # for each investment, append to accumulator
+                acc.append(investment)
+        res = {'success': True, 'data': acc}
+        return json.dumps(res)
+    return json.dumps({'success': False, 'error': 'User does not exist.'})
 
 @app.route('/api/users/', methods=["GET"])
 def get_users():
