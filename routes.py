@@ -35,7 +35,8 @@ def create_user():
             email=body.get('email'),
             username=body.get('username'),
             password=body.get('password'),
-            profile_pic_url=body.get('profile_pic_url')
+            profile_pic_url=body.get('profile_pic_url'),
+            privacy=bool(body.get('privacy'))
         )
         db.session.add(user)
         db.session.commit()
