@@ -28,6 +28,7 @@ class MakeAnAccountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         
         
         signupLabel = UILabel()

@@ -80,61 +80,6 @@ class NetworkManager {
         
     }
     
-
-//    static func getInvestment(fromAmount amount: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
-//
-//        let parameters : [String:Any] =
-//        [
-//            "q": amount
-//        ]
-//        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
-//            switch response.result {
-//            case .success(let data):
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                    print(json)
-//                }
-//
-//                let jsonDecoder = JSONDecoder()
-//
-//                if let amount = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
-//                    didGetInvestments(amount.results)
-//                } else {
-//                    print("Invalid Data")
-//                }
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//
-//        }
-//    }
-//
-//    static func getInvestment(fromPrice price: String, _ didGetInvestments: @escaping ([Stock]) -> Void) {
-//
-//        let parameters : [String:Any] =
-//        [
-//            "q": price
-//        ]
-//        Alamofire.request(investmentURL, method: .get, parameters: parameters).validate().responseData{ (response) in
-//            switch response.result {
-//            case .success(let data):
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                    print(json)
-//                }
-//
-//                let jsonDecoder = JSONDecoder()
-//
-//                if let price = try? jsonDecoder.decode(StockSearchResponse.self, from: data) {
-//                    didGetInvestments(price.results)
-//                } else {
-//                    print("Invalid Data")
-//                }
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
     
     static func userSignIn(fromUsername username: String, fromPassword password: String, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
         
@@ -161,26 +106,7 @@ class NetworkManager {
                 print(error.localizedDescription)
             }
         }
-//        Alamofire.request(userQueryURL, method: .post, parameters: parameters).validate().responseData{ (response) in
-//            switch response.result {
-//            case .success(let data):
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                    print(json)
-//                }
-//                
-//                let jsonDecoder = JSONDecoder()
-//                
-//                if let user = try? jsonDecoder.decode(UserSignInResponse.self, from: data) {
-//                    didGetUser(user)
-//                } else {
-//                    print("Invalid Data")
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//            
-//            
-//        }
+
     }
     
     static func userSignUp(fromUsername username: String, fromPassword password: String, fromEmail email: String, fromConfirmPassword confirmPassword: String, _ didGetUser: @escaping (UserSignInResponse) -> Void) {
@@ -316,29 +242,5 @@ class NetworkManager {
         }
     }
     
-//    static func getFriends(fromUser user_id: Int, _ didGetUser: @escaping (PrivacyResponse) -> Void) {
-//        
-//        let getFriendsURL = "http://35.196.240.185/api/\(user_id)/friends/"
-//        
-//        Alamofire.request(getFriendsURL, method: .get, encoding: URLEncoding.default, headers: nil).validate().responseData{ (response) in
-//            switch response.result {
-//            case .success(let data):
-//                if let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-//                    print(json)
-//                }
-//                
-//                let jsonDecoder = JSONDecoder()
-//                
-//                if let updatedUser = try? jsonDecoder.decode(PrivacyResponse.self, from: data) {
-//                    didGetUser(updatedUser)
-//                } else {
-//                    print("Invalid Data")
-//                }
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
-    
-    
+
 }

@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     var logoView: UIImageView!
+    var logoImage: UIImageView!
     
     var usernameText: UITextField!
     var passwordText: UITextField!
@@ -26,13 +27,23 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         title = "Social Stocks"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.init(red: 250/255, green: 250/255, blue: 250/255, alpha: 1.0)
         
         logoView = UIImageView()
         let logo = UIImage(named: "green.png")
         logoView.translatesAutoresizingMaskIntoConstraints = false
         logoView.image = logo
+        logoView.clipsToBounds = true
+        logoView.contentMode = .scaleAspectFit
         view.addSubview(logoView)
+        
+        logoImage = UIImageView()
+        let pic = UIImage(named: "appLogo.png")
+        logoImage.translatesAutoresizingMaskIntoConstraints = false
+        logoImage.image = pic
+        logoImage.clipsToBounds = true
+        logoImage.contentMode = .scaleAspectFit
+        view.addSubview(logoImage)
         
         usernameText = UITextField()
         usernameText.translatesAutoresizingMaskIntoConstraints = false
@@ -92,10 +103,12 @@ class ViewController: UIViewController {
             logoView.topAnchor.constraint(equalTo: view.topAnchor),
             logoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             logoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            logoView.heightAnchor.constraint(equalToConstant: 400)
+            logoView.heightAnchor.constraint(equalToConstant: 150),
+            logoView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200)
             ])
         NSLayoutConstraint.activate([
-            usernameText.topAnchor.constraint(equalTo: logoView.bottomAnchor, constant: 50),
+            usernameText.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
             usernameText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             usernameText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             usernameText.heightAnchor.constraint(equalToConstant: 60)
@@ -118,7 +131,14 @@ class ViewController: UIViewController {
             signUpButton.trailingAnchor.constraint(equalTo: passwordText.trailingAnchor),
             signUpButton.heightAnchor.constraint(equalToConstant: 60)
             ])
-        
+        NSLayoutConstraint.activate([
+            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImage.centerYAnchor.constraint(equalTo: logoView.centerYAnchor),
+            logoImage.leadingAnchor.constraint(lessThanOrEqualTo: view.leadingAnchor, constant: 60),
+            logoImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
+            logoImage.topAnchor.constraint(equalTo: logoView.topAnchor, constant: 15),
+            logoImage.bottomAnchor.constraint(equalTo: logoView.bottomAnchor, constant: -15)
+            ])
     }
 
 

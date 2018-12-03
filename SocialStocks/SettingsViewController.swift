@@ -42,6 +42,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        title = "Edit Profile"
         
         navigationBar = UINavigationBar()
         let navigationItem = UINavigationItem(title: "Settings")
@@ -165,7 +166,8 @@ class SettingsViewController: UIViewController {
         
         privacyDescription = UILabel()
         privacyDescription.translatesAutoresizingMaskIntoConstraints = false
-        privacyDescription.text = "Off: Everyone can see your current investment posts."
+        privacyDescription.text = "Everyone can see your current investment posts."
+        privacyDescription.textColor = .black
         privacyDescription.font = UIFont.systemFont(ofSize: 16, weight: .light)
         privacyDescription.textAlignment = .left
         privacyDescription.textColor = .gray
@@ -173,7 +175,7 @@ class SettingsViewController: UIViewController {
         
         privacySwitch = UISwitch(frame:CGRect(x: 325, y: 750, width: 0, height: 0))
         privacySwitch.addTarget(self, action: #selector(SettingsViewController.switchStateDidChange(_:)), for: .valueChanged)
-        privacySwitch.setOn(true, animated: false)
+        privacySwitch.setOn(false, animated: true)
         view.addSubview(privacySwitch)
         
         updateButton = UIButton()
@@ -187,7 +189,7 @@ class SettingsViewController: UIViewController {
         signoutButton = UIButton()
         signoutButton.translatesAutoresizingMaskIntoConstraints = false
         signoutButton.setTitle("Sign Out", for: .normal)
-        signoutButton.backgroundColor = UIColor.init(red: 239/255, green: 239/255, blue: 239/255, alpha: 1.0)
+        signoutButton.backgroundColor = .blue
         signoutButton.layer.cornerRadius = 8
         signoutButton.addTarget(self, action: #selector(signOutButtonPushed), for: .touchUpInside)
         view.addSubview(signoutButton)
@@ -299,8 +301,8 @@ class SettingsViewController: UIViewController {
             NetworkManager.getInvestment { (stocks) in
                     self.delegate?.arrayChanged(array: stocks)
                 }
-            }
             privacyDescription.text = "Everyone can see your current investment posts."
+            }
         }
     
     @objc func updateButtonTapped() {

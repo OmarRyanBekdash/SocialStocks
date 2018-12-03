@@ -13,9 +13,6 @@ import Alamofire
 protocol StockTableViewDelegate: class {
     func arrayChanged(array: [Stock])
     
-//    func updateSearchResults()
-//
-//    func encrypt(password: String)
 }
 
 
@@ -33,11 +30,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let cellHeight: CGFloat = 80
     
     var searchController: UISearchController!
-    //    var searchBar: UISearchBar!
-    //    maybe???
-    
-    
-//    let searchBy: SearchType = .company //Change this to serach by company or different ways
     
     var navigationBar: UINavigationBar!
     
@@ -91,59 +83,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false //lets try out true after debugging
-//        if searchBy == .company {
-//            searchController.searchBar.placeholder = "Search by company"
-//        }
-//        if searchBy == .amount {
-//            searchController.searchBar.placeholder = "Search by amount"
-//        }
-//        if searchBy == .price {
-//            searchController.searchBar.placeholder = "Search by price"
-//        }
-        //        searchController.searchBar.placeholder = searchBy == .company ?: "Search by company", .amount ?: "Search by amount", .price ?: "Search by price"
         searchController.searchBar.sizeToFit()
         stockView.tableHeaderView = searchController.searchBar
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        
-        
-        
-        //        let notifications = UIBarButtonItem(title: "Notifications", style: UIBarButtonItem.Style.plain, target: self, action: #selector(notificationsButtonTapped))
-        //        self.navigationItem.leftBarButtonItem = notifications
-        
         let settings = UIBarButtonItem(image: UIImage(named: "settingsGear"), style: UIBarButtonItem.Style.done, target: self, action: #selector(settingsButtonTapped))
         self.navigationItem.leftBarButtonItem = settings
-        
-        
-        //        let addFriend = UIBarButtonItem(title: "Add Friend", style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
-        //        self.navigationItem.rightBarButtonItem = addFriend
-        //
         
         let addFriend = UIBarButtonItem(image: UIImage(named: "add"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(addFriendButtonTapped))
         addFriend.accessibilityFrame = CGRect(x: 0.0, y: 0.0, width: 5, height: 5)
         self.navigationItem.rightBarButtonItem = addFriend
-        
-        /*
-         notifications = UIButton()
-         notifications.translatesAutoresizingMaskIntoConstraints = false
-         notifications.setTitle("Notifications", for: .normal)
-         notifications.setTitleColor(.blue, for: .normal)
-         //notifications.addTarget(self, action: #selector(pushNavViewController), for: .touchUpInside)
-         view.addSubview(notifications)*/
-        
-        /*
-         addFriend = UIButton()
-         addFriend.translatesAutoresizingMaskIntoConstraints = false
-         addFriend.setTitle("Add Friend", for: .normal)
-         addFriend.setTitleColor(.red, for: .normal)
-         //notifications.addTarget(self, action: #selector(pushNavViewController), for: .touchUpInside)
-         view.addSubview(addFriend)*/
-        
-        //        let back = UIBarButtonItem()
-        //        back.title = "Back"
-        //        self.navigationController?.navigationBar.topItem?.backBarButtonItem = back
-        //
         
         
         
@@ -160,10 +110,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             stockView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ])
         
-        //        NSLayoutConstraint.activate([
-        //
-        //            ])
-        // for navigation bar?????
         
         NSLayoutConstraint.activate([
             header.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 8),
@@ -261,22 +207,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 }
-    
-
-
-//extension HomeViewController: {
-//
-//
-//    }
-
-//    func encrypt(password: String) {
-//        let password: Array<UInt8> = Array("s33krit".utf8)
-//        let salt: Array<UInt8> = Array("nacllcan".utf8)
-//
-//        let key = try PKCS5.PBKDF2(password: password, salt: salt, iterations: 4096, variant: .sha256).calculate()
-//
-
-//}
 
 
 extension HomeViewController: StockTableViewDelegate {
@@ -291,9 +221,3 @@ extension HomeViewController: UISearchBarDelegate {
         filterContentForSearchText(searchBar.text!, scope: searchBar.scopeButtonTitles![selectedScope])
     }
 }
-
-//extension HomeViewController: UISearchResultsUpdating {
-//    func updateSearchResults(for searchController: UISearchController) {
-//        filterContentForSearchText(searchController.searchBar.text!)
-//    }
-//}
