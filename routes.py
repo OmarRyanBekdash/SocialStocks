@@ -103,7 +103,7 @@ def get_investments_by_user_privacy(user_id):
     return json.dumps({'success': False, 'error': 'User does not exist.'})
 
 @app.route('/api/investments/a/<int:user_id>/final/')
-def get_friends_investments_with_privacy(user_id):
+def get_friends_investments_final(user_id):
     user = Users.query.filter_by(id=user_id).first()
     if user is not None:
         friends = user.friended.all()

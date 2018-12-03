@@ -56,7 +56,8 @@ class Users(db.Model):
         self.email = kwargs.get('email', '')
         self.username = kwargs.get('username', '')
         self.password = kwargs.get('password', '')
-        self.profilePicUrl = kwargs.get('profilePicUrl', None)
+        self.profile_pic_url = kwargs.get('profile_pic_url', None)
+        self.privacy = kwargs.get('privacy', False)
 
     def serialize(self):
         return {
@@ -64,7 +65,8 @@ class Users(db.Model):
             'email': self.email,
             'username': self.username,
             'password': self.password,
-            'profilePicUrl': self.profilePicUrl
+            'profile_pic_url': self.profile_pic_url,
+            'privacy': self.privacy
         }
 
 
